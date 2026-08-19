@@ -204,9 +204,16 @@
   color: #7A5B2E;
 }
 
+/* 展开/收起入口：墨绿文字 + 虚线描边，暗示可点击 */
 .chip-more {
   background-color: transparent;
-  color: var(--color-neutral);
+  color: var(--color-ink);
+  border: 2rpx dashed #C9CFC4;
+}
+
+/* 按压反馈：豆绿浅底 */
+.chip-more-hover {
+  background-color: var(--color-win-bg);
 }
 
 /* ---------- 固定时令提示 ---------- */

@@ -1,11 +1,12 @@
 /**
  * components/seasonal-radar/index.ts —— 当季时令雷达（展示组件）
  *
- * 数据来自 mock/seasonal-baselines.json（页面 require 后传入 items）。
+ * 数据来自 mock/seasonal-baselines.ts（页面加载后传入 items）。
  * 月份命中规则与 services/seasonal.ts 一致：month ∈ item.months → 当季点亮，
  * 其余月份为暖灰；当前月份加竖线标记。选中品类可横滑切换。
  * 下方三组（当季优选 / 平稳供应 / 反季或供应偏少）由页面用
- * splitSeasonalList 预计算后经 groups 传入，组件只负责渲染。
+ * splitSeasonalList 预计算后经 groups 传入（全量品名），组件默认每组
+ * 只展示前 8 个，点击「…另有 X 样」可展开查看全部、再点「收起」折叠。
  * 组件本身不请求定位、不写任何 storage。
  */
 
@@ -17,6 +18,13 @@ interface MonthDot {
   active: boolean;
   isNow: boolean;
 }
+
+/** groups 组名 → 展开状态字段名 */
+const MORE_KEY: Record<string, string> = {
+  best: 'expandedBest',
+  stable: 'expandedStable',
+  offSeason: 'expandedOffSeason'
+};
 
 Component({
   properties: {
@@ -53,7 +61,11 @@ Component({
   data: {
     selectedIndex: 0,
     selectedName: '',
-    dots: [] as MonthDot[]
+    dots: [] as MonthDot[],
+    /** 三组是否已展开全部品名（默认只展示前 8 个） */
+    expandedBest: false,
+    expandedStable: false,
+    expandedOffSeason: false
   },
 
   observers: {
@@ -78,6 +90,22 @@ Component({
       }
       wx.vibrateShort({ type: 'light' });
       this.setData({ selectedIndex: index });
+    },
+
+    /** 展开某组全部品名（best / stable / offSeason） */
+    onExpandMore(this: any, e: any): void {
+      const key = MORE_KEY[e.currentTarget.dataset.group];
+      if (key) {
+        this.setData({ [key]: true });
+      }
+    },
+
+    /** 收起某组（恢复只展示前 8 个） */
+    onCollapseMore(this: any, e: any): void {
+      const key = MORE_KEY[e.currentTarget.dataset.group];
+      if (key) {
+        this.setData({ [key]: false });
+      }
     },
 
     /** 依据选中品类重建 12 个月圆点 */

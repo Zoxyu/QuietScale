@@ -1,0 +1,187 @@
+/**
+ * custom-tab-bar/index.wxss —— 悬浮胶囊式底部导航样式
+ * 组件样式隔离（isolated），无法引用 page 级 CSS 变量，色值直接写并与 app.wxss 对齐：
+ * 墨绿 #2F4F3E / 次级灰 #8A8578 / 白 #FFFFFF。
+ */
+
+/* 悬浮胶囊条：左右留边 + 安全区适配，全面屏手势条机型不贴底、不遮挡 */
+.tabbar {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 20rpx);
+  z-index: 999;
+  display: flex;
+  height: 116rpx;
+  background-color: #FFFFFF;
+  border-radius: 32rpx;
+  box-shadow: 0 10rpx 40rpx rgba(61, 58, 51, 0.10), 0 2rpx 8rpx rgba(61, 58, 51, 0.05);
+}
+
+/* 导航项：flex 等宽三等分，任何屏宽下均匀分布，不偏移 */
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: opacity 180ms ease;
+}
+
+.tab-hover {
+  opacity: 0.65;
+}
+
+/* ---------- 图标：纯 CSS 线条绘制（40rpx 画布） ---------- */
+.icon-wrap {
+  width: 44rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8A8578; /* 未选中：次级灰 */
+  transition: color 180ms ease;
+}
+
+.tab-item.active .icon-wrap {
+  color: #2F4F3E; /* 选中：墨绿 */
+}
+
+/* 天平（比一比） */
+.icon-compare {
+  position: relative;
+  width: 40rpx;
+  height: 36rpx;
+}
+.cmp-beam {
+  position: absolute;
+  top: 4rpx;
+  left: 2rpx;
+  width: 36rpx;
+  height: 3rpx;
+  background: currentColor;
+  border-radius: 2rpx;
+}
+.cmp-arm {
+  position: absolute;
+  top: 10rpx;
+  width: 0;
+  height: 0;
+  border-left: 7rpx solid transparent;
+  border-right: 7rpx solid transparent;
+  border-top: 9rpx solid currentColor;
+}
+.cmp-arm-left {
+  left: 0;
+}
+.cmp-arm-right {
+  right: 0;
+}
+.cmp-post {
+  position: absolute;
+  top: 7rpx;
+  left: 18rpx;
+  width: 3rpx;
+  height: 15rpx;
+  background: currentColor;
+}
+.cmp-base {
+  position: absolute;
+  bottom: 1rpx;
+  left: 10rpx;
+  width: 20rpx;
+  height: 3rpx;
+  background: currentColor;
+  border-radius: 2rpx;
+}
+
+/* 购物袋（菜场指南） */
+.icon-bag {
+  position: relative;
+  width: 40rpx;
+  height: 36rpx;
+}
+.bag-handle {
+  position: absolute;
+  top: 1rpx;
+  left: 12rpx;
+  width: 16rpx;
+  height: 10rpx;
+  border: 3rpx solid currentColor;
+  border-bottom: none;
+  border-radius: 9rpx 9rpx 0 0;
+  box-sizing: border-box;
+}
+.bag-body {
+  position: absolute;
+  top: 9rpx;
+  left: 5rpx;
+  width: 30rpx;
+  height: 24rpx;
+  border: 3rpx solid currentColor;
+  border-radius: 6rpx 6rpx 12rpx 12rpx;
+  box-sizing: border-box;
+}
+
+/* 人形（我的） */
+.icon-user {
+  position: relative;
+  width: 40rpx;
+  height: 36rpx;
+}
+.user-head {
+  position: absolute;
+  top: 0;
+  left: 13rpx;
+  width: 14rpx;
+  height: 14rpx;
+  border: 3rpx solid currentColor;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.user-body {
+  position: absolute;
+  top: 15rpx;
+  left: 7rpx;
+  width: 26rpx;
+  height: 16rpx;
+  border: 3rpx solid currentColor;
+  border-bottom: none;
+  border-radius: 14rpx 14rpx 0 0;
+  box-sizing: border-box;
+}
+
+/* ---------- 文字 ---------- */
+.label {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  line-height: 1;
+  color: #8A8578;
+  transition: color 180ms ease;
+}
+
+.tab-item.active .label {
+  color: #2F4F3E;
+  font-weight: 600;
+}
+
+/* ---------- 选中指示器：文字下方胶囊横线，淡入缩放 ---------- */
+.indicator {
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  width: 22rpx;
+  height: 5rpx;
+  margin-left: -11rpx;
+  border-radius: 3rpx;
+  background-color: #2F4F3E;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.tab-item.active .indicator {
+  opacity: 1;
+  transform: scaleX(1);
+}

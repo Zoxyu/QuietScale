@@ -9,7 +9,7 @@
 import { compareProducts } from '../../services/compare';
 import { APP_CONFIG } from '../../config/app.config';
 import { fenToYuan, formatYuan } from '../../utils/money';
-import { dimensionCompatible, standardUnitsFor, unitKind } from '../../utils/units';
+import { dimensionCompatible, unitKind } from '../../utils/units';
 import type { CategoryId, CompareSide, ProductInput, UnitCode } from '../../types/models';
 
 /** 运行时全局定时器的本地声明（lib ES2017 未含 DOM 定时器类型） */
@@ -65,6 +65,45 @@ function defaultInput(): ProductInput {
     perUseAmountValue: ''
   };
 }
+
+/**
+ * 各分类预填充案例（A/B 一对；单位均为该分类合法单位）。
+ * 切换分类时整体替换，保证案例与分类语义一致（如按件售卖用抽纸而非洗衣液）。
+ */
+const PRESET_CASES: Record<CategoryId, { a: Partial<ProductInput>; b: Partial<ProductInput> }> = {
+  weight: {
+    a: { name: '鲜鸡蛋', unitCode: 'jin', quantityValue: '2', originalPriceYuan: '19.9' },
+    b: { name: '土鸡蛋', unitCode: 'jin', quantityValue: '1.5', originalPriceYuan: '24.9' }
+  },
+  liquid: {
+    a: { name: '纯牛奶', unitCode: 'L', quantityValue: '1', originalPriceYuan: '12.9' },
+    b: { name: '高钙奶', unitCode: 'ml', quantityValue: '950', originalPriceYuan: '15.9' }
+  },
+  piece: {
+    a: { name: '抽纸', unitCode: 'piece', quantityValue: '24', originalPriceYuan: '49.9' },
+    b: { name: '抽纸', unitCode: 'piece', quantityValue: '36', originalPriceYuan: '69.9' }
+  },
+  'grain-oil': {
+    a: { name: '东北大米', unitCode: 'kg', quantityValue: '5', originalPriceYuan: '39.9' },
+    b: { name: '泰国香米', unitCode: 'kg', quantityValue: '5', originalPriceYuan: '55.9' }
+  },
+  'daily-care': {
+    a: { name: 'A 品牌洗衣液', unitCode: 'kg', quantityValue: '1.8', originalPriceYuan: '39.9' },
+    b: {
+      name: 'B 品牌洗衣液',
+      unitCode: 'kg',
+      quantityValue: '2.5',
+      originalPriceYuan: '49.9',
+      giftEnabled: true,
+      giftUnitCode: 'g',
+      giftQuantityValue: '500'
+    }
+  },
+  fresh: {
+    a: { name: '番茄', unitCode: 'jin', quantityValue: '2', originalPriceYuan: '7.9' },
+    b: { name: '圣女果', unitCode: 'g', quantityValue: '500', originalPriceYuan: '6.9' }
+  }
+};
 
 /** 金额展示：先 round 到整数分再转元（与 compare.ts 展示口径一致） */
 function roundFen(v: number): number {
@@ -176,23 +215,8 @@ Page({
   data: {
     categories: CATEGORY_LIST,
     category: 'daily-care' as CategoryId,
-    inputA: {
-      ...defaultInput(),
-      name: 'A 品牌洗衣液',
-      unitCode: 'kg',
-      quantityValue: '1.8',
-      originalPriceYuan: '39.9'
-    } as ProductInput,
-    inputB: {
-      ...defaultInput(),
-      name: 'B 品牌洗衣液',
-      unitCode: 'kg',
-      quantityValue: '2.5',
-      originalPriceYuan: '49.9',
-      giftEnabled: true,
-      giftUnitCode: 'g',
-      giftQuantityValue: '500'
-    } as ProductInput,
+    inputA: { ...defaultInput(), ...PRESET_CASES['daily-care'].a } as ProductInput,
+    inputB: { ...defaultInput(), ...PRESET_CASES['daily-care'].b } as ProductInput,
     editingA: false,
     editingB: false,
     swapping: false,
@@ -215,6 +239,13 @@ Page({
     this.recompute();
   },
 
+  /** 同步自定义 tabBar 选中态（比一比 = 0） */
+  onShow(this: any): void {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 });
+    }
+  },
+
   onUnload(this: any): void {
     clearTimeout(this._debounceTimer);
     clearTimeout(this._swapTimer);
@@ -226,25 +257,15 @@ Page({
     this.setData({ sheetOpen: e.currentTarget.dataset.open === '1' });
   },
 
-  /** 分类切换：单位收敛到当前分类合法集合后重算 */
+  /** 分类切换：整体替换为该分类的预填充案例后重算 */
   onCategoryChange(this: any, e: any): void {
     const category = e.detail.id as CategoryId;
-    const units = standardUnitsFor(category);
-    const patchA: Partial<ProductInput> = {};
-    const patchB: Partial<ProductInput> = {};
-    if (units.indexOf(this.data.inputA.unitCode) < 0) {
-      patchA.unitCode = units[0];
-      if (!dimensionCompatible(units[0], this.data.inputA.giftUnitCode)) {
-        patchA.giftUnitCode = units[0];
-      }
-    }
-    if (units.indexOf(this.data.inputB.unitCode) < 0) {
-      patchB.unitCode = units[0];
-      if (!dimensionCompatible(units[0], this.data.inputB.giftUnitCode)) {
-        patchB.giftUnitCode = units[0];
-      }
-    }
-    this.setData({ category, 'inputA': { ...this.data.inputA, ...patchA }, 'inputB': { ...this.data.inputB, ...patchB } });
+    const preset = PRESET_CASES[category];
+    this.setData({
+      category,
+      inputA: { ...defaultInput(), ...preset.a } as ProductInput,
+      inputB: { ...defaultInput(), ...preset.b } as ProductInput
+    });
     this.recompute();
   },
 

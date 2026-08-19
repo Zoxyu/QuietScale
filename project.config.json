@@ -1,9 +1,9 @@
 {
   "description": "一秤清欢 QuietScale —— 菜场比价小程序项目配置",
-  "appid": "touristappid",
+  "appid": "wx71a690a5d208391c",
   "projectname": "quiet-scale",
   "compileType": "miniprogram",
-  "libVersion": "3.0.0",
+  "libVersion": "3.17.1",
   "setting": {
     "es6": true,
     "enhance": true,
@@ -12,10 +12,35 @@
     "urlCheck": false,
     "coverView": true,
     "lazyloadPlaceholderEnable": false,
-    "ignoreUploadUnusedFiles": false
+    "ignoreUploadUnusedFiles": false,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": [
+      "typescript"
+    ],
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
   },
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
+  },
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
   }
 }

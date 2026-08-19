@@ -1,29 +1,22 @@
 /**
  * components/category-chips/index.wxss —— 分类 chips 样式
+ * 两行排列（3+3），无需横向滚动，所有分类一目了然。
  */
 
 .chips {
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   margin-top: var(--space-lg);
-  white-space: nowrap;
-}
-
-.chips-track {
-  display: inline-flex;
-  padding: 8rpx 4rpx;
-}
-
-.chip + .chip {
-  margin-left: var(--space-sm);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* 点击热区 ≥ 88rpx：flex 居中文本保持胶囊观感，横滑容器随内容自适应高度 */
+  /* 点击热区 ≥ 88rpx；换行间距由 margin 控制 */
   min-height: 88rpx;
   padding: 0 32rpx;
+  margin: 0 var(--space-sm) var(--space-sm) 0;
   border-radius: var(--radius-pill);
   background-color: var(--color-surface);
   border: 2rpx solid var(--color-border);

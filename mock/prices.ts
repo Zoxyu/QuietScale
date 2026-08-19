@@ -1,4 +1,11 @@
-{
+/**
+ * mock/prices.ts —— 由 mock/prices.json 转换生成的运行时数据模块（自动生成，请勿手改数据部分）
+ * 结构契约：types/models.ts 的 PricesFile。
+ */
+
+import type { PricesFile } from '../types/models';
+
+export const PRICES_FILE: PricesFile = {
   "version": "2026.08.18",
   "generatedAt": "2026-08-18T06:00:00+08:00",
   "expiresAt": "2026-08-19T06:00:00+08:00",
@@ -1925,3 +1932,4 @@
     }
   ]
 }
+;

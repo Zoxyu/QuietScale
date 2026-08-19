@@ -190,7 +190,7 @@
 }
 
 .page-bottom-space {
-  height: 80rpx;
+  height: calc(220rpx + env(safe-area-inset-bottom));
 }
 
 /* ---------- 计算说明 Bottom Sheet ---------- */

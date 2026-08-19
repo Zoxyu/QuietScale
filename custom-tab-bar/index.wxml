@@ -1,0 +1,34 @@
+<view class="tabbar">
+  <view
+    wx:for="{{list}}"
+    wx:key="pagePath"
+    class="tab-item {{selected === index ? 'active' : ''}}"
+    data-index="{{index}}"
+    bindtap="onTap"
+    hover-class="tab-hover"
+    hover-stay-time="80"
+  >
+    <view class="icon-wrap">
+      <!-- 比一比：天平（横梁 + 两端托盘 + 立柱底座） -->
+      <view wx:if="{{index === 0}}" class="icon icon-compare">
+        <view class="cmp-beam"></view>
+        <view class="cmp-arm cmp-arm-left"></view>
+        <view class="cmp-arm cmp-arm-right"></view>
+        <view class="cmp-post"></view>
+        <view class="cmp-base"></view>
+      </view>
+      <!-- 菜场指南：购物袋（提手 + 袋身） -->
+      <view wx:elif="{{index === 1}}" class="icon icon-bag">
+        <view class="bag-handle"></view>
+        <view class="bag-body"></view>
+      </view>
+      <!-- 我的：人形（头 + 肩） -->
+      <view wx:else class="icon icon-user">
+        <view class="user-head"></view>
+        <view class="user-body"></view>
+      </view>
+    </view>
+    <view class="label">{{item.text}}</view>
+    <view class="indicator"></view>
+  </view>
+</view>

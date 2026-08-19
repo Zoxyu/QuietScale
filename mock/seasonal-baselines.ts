@@ -1,4 +1,11 @@
-{
+/**
+ * mock/seasonal-baselines.ts —— 由 mock/seasonal-baselines.json 转换生成的运行时数据模块（自动生成，请勿手改数据部分）
+ * 结构契约：types/models.ts 的 SeasonalBaselineItem。
+ */
+
+import type { SeasonalBaselineItem } from '../types/models';
+
+export const SEASONAL_BASELINES: { version: string; lastRevised: string; editorNote: string; items: SeasonalBaselineItem[] } = {
   "version": "2026.08",
   "lastRevised": "2026-07-01",
   "editorNote": "季节经验参考，非实时市场价",
@@ -1503,3 +1510,4 @@
     }
   ]
 }
+;

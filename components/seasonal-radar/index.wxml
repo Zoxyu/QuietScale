@@ -42,8 +42,28 @@
         <text class="group-sub">通常更适合关注的菜</text>
       </view>
       <view class="chips">
-        <text wx:for="{{groups.best}}" wx:key="name" class="chip chip-best">{{item.name}}</text>
-        <text wx:if="{{groups.bestMore > 0}}" class="chip chip-more">…另有 {{groups.bestMore}} 样</text>
+        <view
+          wx:for="{{groups.best}}"
+          wx:key="name"
+          wx:if="{{index < 8 || expandedBest}}"
+          class="chip chip-best"
+        >{{item.name}}</view>
+        <view
+          wx:if="{{groups.bestMore > 0 && !expandedBest}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onExpandMore"
+          data-group="best"
+        >…另有 {{groups.bestMore}} 样</view>
+        <view
+          wx:if="{{expandedBest}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onCollapseMore"
+          data-group="best"
+        >收起</view>
       </view>
     </view>
 
@@ -53,8 +73,28 @@
         <text class="group-sub">全年供应较稳定</text>
       </view>
       <view class="chips">
-        <text wx:for="{{groups.stable}}" wx:key="name" class="chip chip-stable">{{item.name}}</text>
-        <text wx:if="{{groups.stableMore > 0}}" class="chip chip-more">…另有 {{groups.stableMore}} 样</text>
+        <view
+          wx:for="{{groups.stable}}"
+          wx:key="name"
+          wx:if="{{index < 8 || expandedStable}}"
+          class="chip chip-stable"
+        >{{item.name}}</view>
+        <view
+          wx:if="{{groups.stableMore > 0 && !expandedStable}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onExpandMore"
+          data-group="stable"
+        >…另有 {{groups.stableMore}} 样</view>
+        <view
+          wx:if="{{expandedStable}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onCollapseMore"
+          data-group="stable"
+        >收起</view>
       </view>
     </view>
 
@@ -64,8 +104,28 @@
         <text class="group-sub">可能存在季节溢价</text>
       </view>
       <view class="chips">
-        <text wx:for="{{groups.offSeason}}" wx:key="name" class="chip chip-off">{{item.name}}</text>
-        <text wx:if="{{groups.offSeasonMore > 0}}" class="chip chip-more">…另有 {{groups.offSeasonMore}} 样</text>
+        <view
+          wx:for="{{groups.offSeason}}"
+          wx:key="name"
+          wx:if="{{index < 8 || expandedOffSeason}}"
+          class="chip chip-off"
+        >{{item.name}}</view>
+        <view
+          wx:if="{{groups.offSeasonMore > 0 && !expandedOffSeason}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onExpandMore"
+          data-group="offSeason"
+        >…另有 {{groups.offSeasonMore}} 样</view>
+        <view
+          wx:if="{{expandedOffSeason}}"
+          class="chip chip-more"
+          hover-class="chip-more-hover"
+          hover-stay-time="80"
+          bind:tap="onCollapseMore"
+          data-group="offSeason"
+        >收起</view>
       </view>
     </view>
   </view>

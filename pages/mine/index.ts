@@ -45,5 +45,12 @@ Page({
 
     /** 品牌文案（50 字内） */
     aboutText: '一杆秤，一把菜，一份明白的价钱。愿你在寻常烟火里，买得从容，吃得安心。'
+  },
+
+  /** 同步自定义 tabBar 选中态（我的 = 2） */
+  onShow(this: any): void {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 2 });
+    }
   }
 });

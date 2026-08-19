@@ -5,7 +5,8 @@
 
 .page {
   min-height: 100vh;
-  padding: 40rpx 28rpx 48rpx;
+  /* 底部预留自定义悬浮 tabBar 空间（含安全区适配） */
+  padding: 40rpx 28rpx calc(220rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 

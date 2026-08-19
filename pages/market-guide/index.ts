@@ -14,6 +14,7 @@
 import { getPriceDataset } from '../../services/price-data-service';
 import { judgeObservedPrice } from '../../services/judge';
 import { splitSeasonalList, getSeasonalTip } from '../../services/seasonal';
+import { SEASONAL_BASELINES } from '../../mock/seasonal-baselines';
 import type { SeasonalBaselineItem } from '../../services/seasonal';
 import { CITY_KEYS, CITY_NAMES } from '../../types/models';
 import type {
@@ -27,17 +28,12 @@ import type {
   DataGrade
 } from '../../types/models';
 
-/** 小程序 CommonJS 环境下的 require（加载本地季节基线 mock JSON） */
-declare function require(path: string): any;
-
 /** 运行时全局定时器的本地声明（lib ES2017 未含 DOM 定时器类型） */
 declare function setTimeout(handler: (...args: unknown[]) => void, timeout?: number): number;
 declare function clearTimeout(handle?: number): void;
 
-/** 本地季节经验基线数据（与 mock/seasonal-baselines.json 结构一致） */
-const SEASONAL_FILE = require('../../mock/seasonal-baselines.json') as {
-  items: SeasonalBaselineItem[];
-};
+/** 本地季节经验基线数据（原生小程序无法在运行时读取代码包内 JSON，故以 TS 模块形式提供） */
+const SEASONAL_FILE = SEASONAL_BASELINES;
 
 /** 判断输入防抖间隔（毫秒） */
 const JUDGE_DEBOUNCE_MS = 200;
@@ -244,23 +240,21 @@ function filterRecords(
   return { list: national, note: `${cityName}暂无参考记录，已切换为全国参考。` };
 }
 
-/** 时令三组 → 雷达组件结构（各最多 8 个 + 省略计数） */
+/** 时令三组 → 雷达组件结构（传全量品名，由组件按需截断/展开） */
 function buildSeasonalGroups(items: SeasonalBaselineItem[], month: number): Record<string, unknown> {
   const split = splitSeasonalList(items, month);
-  const cap = (arr: SeasonalBaselineItem[]): { list: Array<{ name: string }>; more: number } => ({
-    list: arr.slice(0, 8).map((it) => ({ name: it.productName })),
-    more: Math.max(0, arr.length - 8)
-  });
-  const best = cap(split.best);
-  const stable = cap(split.stable);
-  const off = cap(split.offSeason);
+  const toNames = (arr: SeasonalBaselineItem[]): Array<{ name: string }> =>
+    arr.map((it) => ({ name: it.productName }));
+  const best = toNames(split.best);
+  const stable = toNames(split.stable);
+  const off = toNames(split.offSeason);
   return {
-    best: best.list,
-    bestMore: best.more,
-    stable: stable.list,
-    stableMore: stable.more,
-    offSeason: off.list,
-    offSeasonMore: off.more
+    best,
+    bestMore: Math.max(0, best.length - 8),
+    stable,
+    stableMore: Math.max(0, stable.length - 8),
+    offSeason: off,
+    offSeasonMore: Math.max(0, off.length - 8)
   };
 }
 
@@ -307,6 +301,13 @@ Page({
   onLoad(this: any): void {
     this.loadSeasonal();
     this.loadPrices();
+  },
+
+  /** 同步自定义 tabBar 选中态（菜场指南 = 1） */
+  onShow(this: any): void {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 1 });
+    }
   },
 
   onUnload(this: any): void {

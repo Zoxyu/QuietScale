@@ -25,14 +25,12 @@
  */
 
 import { APP_CONFIG } from '../config/app.config';
+import { PRICES_FILE } from '../mock/prices';
 import type { DataGrade, PricesFile } from '../types/models';
 import { todayDateKey } from '../utils/format';
 
-/** 小程序 CommonJS 环境下的 require（用于加载本地 mock JSON） */
-declare function require(path: string): any;
-
-/** 本地 mock 参考价数据（与 mock/prices.json 结构一致） */
-const MOCK_PRICES = require('../mock/prices.json') as PricesFile;
+/** 本地 mock 参考价数据（原生小程序无法在运行时读取代码包内 JSON，故以 TS 模块形式提供） */
+const MOCK_PRICES = PRICES_FILE;
 
 /** storage 键：公共拉取标记（仅数据版本信息，不含任何用户数据） */
 const FETCH_META_KEY = 'qs_fetch_meta';

@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "typeRoots": ["./typings"]
   },
-  "include": ["app.ts", "typings/**/*.d.ts", "types/**/*.ts", "config/**/*.ts", "utils/**/*.ts", "services/**/*.ts", "pages/**/*.ts", "components/**/*.ts"],
+  "include": ["app.ts", "typings/**/*.d.ts", "types/**/*.ts", "config/**/*.ts", "utils/**/*.ts", "services/**/*.ts", "pages/**/*.ts", "components/**/*.ts", "mock/**/*.ts"],
   "exclude": ["node_modules", "tests", "scripts", "dist"]
 }

@@ -1,6 +1,7 @@
 /**
  * components/guide-card/index.wxss —— 新手挑选指南折叠卡样式
- * 展开收起：max-height + 箭头旋转，均由 CSS transition 驱动。
+ * 展开收起：display 切换 + 展开淡入（仅 opacity/transform，GPU 合成层动画，
+ * 不触发 layout 重算；避免 max-height 动画在部分机型上白屏闪烁）。
  */
 
 .guide {
@@ -9,7 +10,7 @@
 }
 
 .hover-soft {
-  opacity: 0.7;
+  background-color: rgba(61, 58, 51, 0.05);
 }
 
 /* ---------- 头部 ---------- */
@@ -70,13 +71,24 @@
 
 /* ---------- 折叠主体 ---------- */
 .guide-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 320ms ease;
+  display: none;
 }
 
 .guide-open .guide-body {
-  max-height: 900rpx;
+  display: block;
+  animation: guide-fade-in 200ms ease;
+}
+
+/* 展开淡入：仅合成层属性，低端机型不闪烁 */
+@keyframes guide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .guide-body-inner {

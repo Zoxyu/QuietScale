@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "菜场指南",
   "usingComponents": {
     "price-item": "/components/price-item/index",
     "guide-card": "/components/guide-card/index",
