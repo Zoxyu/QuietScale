@@ -1,0 +1,66 @@
+<!-- pages/compare/index.wxml —— 「比一比」首页 -->
+<view class="page">
+
+  <!-- 顶部：标题 + 计算说明入口 -->
+  <view class="header fade-in-up">
+    <view class="header-left">
+      <view class="title-row">
+        <view class="seal">秤</view>
+        <view class="title-text">
+          <view class="title">一秤清欢</view>
+          <view class="subtitle">把价格，换算成明白</view>
+        </view>
+      </view>
+    </view>
+    <view class="explain-btn" data-open="1" bindtap="onSheet">
+      <view class="explain-pill">计算说明</view>
+    </view>
+  </view>
+
+  <!-- 分类 chips -->
+  <category-chips categories="{{categories}}" active-id="{{category}}" bind:change="onCategoryChange" />
+
+  <!-- 交换行：居中 VS 圆点（可点击交换） -->
+  <view class="vs-row fade-in-up" style="animation-delay: 60ms;">
+    <view class="vs-btn" hover-class="vs-hover" bindtap="onSwap">
+      <view class="vs-badge {{swapping ? 'is-swapping' : ''}}">VS</view>
+      <text class="vs-hint">点我交换 A / B</text>
+    </view>
+  </view>
+
+  <!-- 双栏商品卡片：noTrans 期间禁用 transition，交换数据时 transform 无过渡归零（无回程） -->
+  <view class="cards-row">
+    <view class="card-col {{swapping ? 'swap-left' : ''}} {{noTrans ? 'no-trans' : ''}}">
+      <product-card value="{{inputA}}" side="A" category="{{category}}" editing="{{editingA}}"
+        bind:change="onProductChange" bind:edit="onEditChange" />
+    </view>
+    <view class="card-col {{swapping ? 'swap-right' : ''}} {{noTrans ? 'no-trans' : ''}}">
+      <product-card value="{{inputB}}" side="B" category="{{category}}" editing="{{editingB}}"
+        bind:change="onProductChange" bind:edit="onEditChange" />
+    </view>
+  </view>
+
+  <!-- 结果区：invalid 弱化提示 / cross 浅杏提示框 / ok 结果卡 -->
+  <view wx:if="{{resultStatus === 'invalid'}}" class="result-invalid">请补全规格与价格，结果将实时更新</view>
+  <view wx:elif="{{resultStatus === 'cross'}}" class="cross-box fade-in-up">{{resultMessage}}</view>
+  <result-card wx:elif="{{resultStatus === 'ok'}}" spec="{{resultSpec}}" tick="{{resultTick}}" />
+
+  <view class="page-bottom-space"></view>
+
+  <!-- 计算说明 Bottom Sheet（遮罩 + 底部面板，CSS transition 上滑） -->
+  <view class="sheet-mask {{sheetOpen ? 'on' : ''}}" bindtap="onSheet" data-open="0"></view>
+  <view class="sheet {{sheetOpen ? 'open' : ''}}">
+    <view class="sheet-bar">
+      <view class="sheet-bar-line"></view>
+    </view>
+    <view class="sheet-head">
+      <view class="sheet-title">计算说明</view>
+      <view class="sheet-close tap-area" hover-class="hover-soft" bindtap="onSheet" data-open="0">关闭</view>
+    </view>
+    <view class="sheet-item"><text class="sheet-num">壹</text><text>有效总量 = 主规格 + 赠品（赠品按 0 元计入）</text></view>
+    <view class="sheet-item"><text class="sheet-num">贰</text><text>实付 = 原价 − 立减 − 优惠券（或满减后实付）</text></view>
+    <view class="sheet-item"><text class="sheet-num">叁</text><text>标准单价 = 实付 ÷ 有效总量 × 标准单位</text></view>
+    <view class="sheet-item"><text class="sheet-num">肆</text><text>赠品按 0 元计入，不虚构赠品现金价值</text></view>
+    <view class="sheet-item"><text class="sheet-num">伍</text><text>不含运费、会员费与凑单成本</text></view>
+  </view>
+</view>

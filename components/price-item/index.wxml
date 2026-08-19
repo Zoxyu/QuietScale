@@ -1,0 +1,32 @@
+<!-- components/price-item/index.wxml —— 参考价条目 -->
+<view
+  class="item {{item.muted ? 'item-muted' : ''}}"
+  hover-class="item-hover"
+  bind:tap="onTap"
+>
+  <view class="item-main">
+    <view class="item-head">
+      <text class="item-name">{{item.productName}}</text>
+      <text class="conf conf-{{item.confidence}}">{{item.confidenceLabel}}</text>
+    </view>
+    <view class="item-spec">{{item.category}} · {{item.specification}}</view>
+    <view class="item-meta">
+      <text class="level-badge">{{item.levelLabel}}</text>
+      <text class="meta-dot">·</text>
+      <text>{{item.channelName}}</text>
+      <text class="meta-dot">·</text>
+      <text>{{item.dateLabel}}</text>
+    </view>
+    <view wx:if="{{item.isWholesale}}" class="wholesale-note">
+      这是批发环节参考，不能直接等同于菜市场或商超零售价。
+    </view>
+  </view>
+
+  <view class="item-price">
+    <view class="price-range">{{item.low}}–{{item.high}}</view>
+    <view class="price-unit">{{item.unit}}</view>
+    <view class="price-median">
+      中位 <text class="median-num">{{item.median}}</text>
+    </view>
+  </view>
+</view>

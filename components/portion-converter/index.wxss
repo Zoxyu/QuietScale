@@ -1,0 +1,158 @@
+/**
+ * components/portion-converter/index.wxss —— 份量与重量换算器样式
+ */
+
+.conv {
+  padding: 30rpx;
+}
+
+.hover-soft {
+  opacity: 0.7;
+}
+
+.sub-title {
+  font-size: 25rpx;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 2rpx;
+  margin-bottom: var(--space-sm);
+}
+
+.sub-title + .sub-title,
+.examples + .sub-title,
+.convert-result + .sub-title {
+  margin-top: var(--space-lg);
+}
+
+/* ---------- 重量速查表 ---------- */
+.weight-table {
+  border-radius: 14rpx;
+  border: 2rpx solid var(--color-border);
+  overflow: hidden;
+}
+
+.weight-row {
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+  background-color: var(--color-bg);
+  transition: all 180ms ease;
+}
+
+.weight-row + .weight-row {
+  border-top: 2rpx solid var(--color-border);
+}
+
+.weight-label {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 120rpx;
+}
+
+.weight-grams {
+  font-size: 27rpx;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.weight-note {
+  margin-left: auto;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 克数换算 ---------- */
+.convert-row {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-bg);
+  border: 2rpx solid var(--color-border);
+  border-radius: 14rpx;
+  padding: 0 var(--space-md);
+}
+
+.grams-input {
+  flex: 1;
+  min-height: 88rpx;
+  font-size: 34rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.grams-placeholder {
+  color: var(--color-neutral);
+  font-size: 28rpx;
+}
+
+.grams-unit {
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+}
+
+.convert-result {
+  margin-top: var(--space-sm);
+  min-height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14rpx;
+  background-color: #F3F1EC;
+  transition: all 220ms ease;
+}
+
+.convert-result-on {
+  background-color: var(--color-win-bg);
+}
+
+.result-text {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 2rpx;
+}
+
+.result-hint {
+  font-size: 26rpx;
+  color: var(--color-neutral);
+}
+
+/* ---------- 购买量经验 ---------- */
+.examples {
+  display: flex;
+  flex-direction: column;
+}
+
+.example {
+  padding: var(--space-sm) 0;
+}
+
+.example + .example {
+  border-top: 2rpx dashed var(--color-border);
+}
+
+.example-name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44rpx;
+  padding: 0 18rpx;
+  border-radius: var(--radius-pill);
+  background-color: rgba(47, 79, 62, 0.08);
+  color: var(--color-ink);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.example-text {
+  margin-top: var(--space-sm);
+  font-size: 27rpx;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.example-disclaimer {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "菜场指南",
+  "usingComponents": {
+    "price-item": "/components/price-item/index",
+    "guide-card": "/components/guide-card/index",
+    "seasonal-radar": "/components/seasonal-radar/index",
+    "portion-converter": "/components/portion-converter/index"
+  }
+}

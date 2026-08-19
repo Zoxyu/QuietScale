@@ -1,0 +1,89 @@
+<!-- pages/price-detail/index.wxml —— 「价格详情」 -->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="state-card card">正在为你查找这条价格记录…</view>
+
+  <!-- 未找到 -->
+  <view wx:elif="{{notFound}}" class="state-card card">
+    <view class="state-title">没有找到这条记录</view>
+    <view class="state-desc">这条参考价可能已不在最新数据中，回到菜场指南看看吧。</view>
+    <navigator url="/pages/market-guide/index" open-type="switchTab" class="state-link tap-area">
+      返回菜场指南
+    </navigator>
+  </view>
+
+  <!-- 详情 -->
+  <block wx:elif="{{rec}}">
+
+    <!-- 头部：品名 + 口径 -->
+    <view class="head-card card fade-in-up">
+      <view class="head-top">
+        <text class="product-name">{{rec.productName}}</text>
+        <view class="head-badges">
+          <text class="badge badge-level">{{rec.levelLabel}}</text>
+          <text class="badge badge-conf">{{rec.confidenceLabel}}</text>
+        </view>
+      </view>
+      <view class="spec-line">规格：{{rec.specification}}</view>
+      <view class="caliber-line">{{rec.priceCaliber}}</view>
+    </view>
+
+    <!-- 近 7 日趋势 -->
+    <view class="card block fade-in-up">
+      <view class="block-title">近 7 日走势</view>
+      <block wx:if="{{rec.hasTrend}}">
+        <trend-chart values="{{rec.trend7d}}" unit="{{rec.unit}}" />
+      </block>
+      <view wx:else class="block-empty">这条记录暂无逐日走势数据。</view>
+    </view>
+
+    <!-- 参考价三档 + 样本量 -->
+    <view class="card block fade-in-up">
+      <view class="block-title">参考区间</view>
+      <view class="price-row">
+        <view class="price-cell">
+          <view class="price-num price-low-num">{{rec.low}}</view>
+          <view class="price-cap">最低价</view>
+        </view>
+        <view class="price-cell price-cell-mid">
+          <view class="price-num price-mid-num">{{rec.median}}</view>
+          <view class="price-cap">中位数</view>
+        </view>
+        <view class="price-cell">
+          <view class="price-num price-high-num">{{rec.high}}</view>
+          <view class="price-cap">较高价</view>
+        </view>
+      </view>
+      <view class="unit-line">单位：{{rec.unit}}｜样本量：{{rec.sampleCount}}</view>
+    </view>
+
+    <!-- 数据来源 -->
+    <view class="card block fade-in-up">
+      <view class="block-title">数据来源与口径</view>
+      <view class="meta-line">
+        <text class="meta-key">来源</text>
+        <text class="meta-val">{{rec.sourceName}}</text>
+      </view>
+      <view class="meta-line">
+        <text class="meta-key">数据日期</text>
+        <text class="meta-val">{{rec.dataDate}} 更新</text>
+      </view>
+      <view wx:if="{{rec.hasUrl}}" class="meta-line">
+        <text class="meta-key">链接</text>
+        <view class="meta-val source-line">
+          <text class="source-url">{{rec.sourceUrl}}</text>
+          <view class="copy-btn tap-area" bind:tap="onCopySource">复制链接</view>
+        </view>
+      </view>
+      <view wx:if="{{rec.note}}" class="note-text">{{rec.note}}</view>
+    </view>
+
+    <!-- 免责说明 -->
+    <view class="disclaimer-box fade-in-up">
+      <view wx:if="{{rec.isWholesale}}" class="disclaimer-warn">{{rec.wholesaleNote}}</view>
+      <view class="disclaimer-text">{{rec.commonDisclaimer}}</view>
+    </view>
+
+  </block>
+</view>

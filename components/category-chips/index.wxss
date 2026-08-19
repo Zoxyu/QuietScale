@@ -1,0 +1,48 @@
+/**
+ * components/category-chips/index.wxss —— 分类 chips 样式
+ */
+
+.chips {
+  width: 100%;
+  margin-top: var(--space-lg);
+  white-space: nowrap;
+}
+
+.chips-track {
+  display: inline-flex;
+  padding: 8rpx 4rpx;
+}
+
+.chip + .chip {
+  margin-left: var(--space-sm);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 点击热区 ≥ 88rpx：flex 居中文本保持胶囊观感，横滑容器随内容自适应高度 */
+  min-height: 88rpx;
+  padding: 0 32rpx;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+  border: 2rpx solid var(--color-border);
+  font-size: 26rpx;
+  letter-spacing: 2rpx;
+  color: var(--color-text-secondary);
+  transition: all 180ms ease;
+  flex-shrink: 0;
+}
+
+.chip-hover {
+  opacity: 0.75;
+}
+
+/* 选中态：墨绿底白字 */
+.chip-active {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 6rpx 16rpx rgba(47, 79, 62, 0.22);
+}

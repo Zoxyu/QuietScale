@@ -1,0 +1,56 @@
+<!-- components/result-card/index.wxml —— 实时结果卡 -->
+<!-- wx:key 绑定 tick：每次新结果节点重挂载，.rc 内置入场动画重放 -->
+<block wx:for="{{[tick]}}" wx:key="*this">
+<view class="rc" bindtap="onTap">
+
+  <!-- 推荐结论 -->
+  <view class="rc-headline">{{headline}}</view>
+  <view wx:if="{{showDiff}}" class="rc-diff">
+    <text class="rc-diff-num">{{diffText}}</text>
+    <text class="rc-diff-unit">元 / {{diffUnit}}</text>
+    <view class="rc-percent">约便宜 {{percentText}}</view>
+  </view>
+
+  <!-- A / B 单价对比：胜者豆绿浅底 + 更划算标签 -->
+  <view class="rc-sides">
+    <view
+      wx:for="{{sides}}"
+      wx:key="tag"
+      class="rc-side {{item.win ? 'rc-win' : 'rc-lose'}}"
+    >
+      <view class="rc-side-top">
+        <text class="rc-side-tag">{{item.tag}}</text>
+        <text wx:if="{{item.win}}" class="rc-win-tag">✔ 更划算</text>
+      </view>
+      <view class="rc-price">
+        <text class="rc-price-num">{{item.price}}</text>
+        <text class="rc-price-unit">元/{{item.label}}</text>
+      </view>
+      <view wx:if="{{item.unitLines.length > 1}}" class="rc-subline">
+        <text wx:for="{{item.unitLines}}" wx:for-item="line" wx:key="label" class="rc-sub-item">{{line.label}} {{line.price}}</text>
+      </view>
+      <view class="rc-totals">
+        <view class="rc-total-row"><text class="rc-total-label">到手总量</text><text class="rc-total-value">{{item.total}}</text></view>
+        <view class="rc-total-row"><text class="rc-total-label">实付</text><text class="rc-total-value">{{item.finalYuan}} 元</text></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 每次使用成本（洗护日化且两侧均填写用量） -->
+  <view wx:if="{{showPerUse}}" class="rc-peruse">
+    <text class="rc-peruse-title">每次使用成本</text>
+    <text class="rc-peruse-item">A {{perUse.a}} 元</text>
+    <text class="rc-peruse-item">B {{perUse.b}} 元</text>
+    <text class="rc-peruse-delta">{{perUse.deltaTag}}</text>
+  </view>
+
+  <!-- 计算明细 -->
+  <view class="rc-details">
+    <view class="rc-details-title">计算明细</view>
+    <view wx:for="{{details}}" wx:key="*this" class="rc-detail-line">{{item}}</view>
+  </view>
+
+  <!-- 固定提示 -->
+  <view class="rc-notice">{{notice}}</view>
+</view>
+</block>

@@ -1,0 +1,161 @@
+<!-- components/product-card/index.wxml —— 单边商品输入卡 -->
+<view class="pc-card {{editing ? 'pc-editing' : ''}}">
+  <!-- 侧标 -->
+  <view class="pc-head">
+    <view class="pc-tag">{{side}}</view>
+    <text class="pc-tag-note">{{side === 'A' ? '左边这件' : '右边这件'}}</text>
+  </view>
+
+  <!-- 商品名称 -->
+  <input
+    class="pc-name"
+    value="{{value.name}}"
+    placeholder="商品名称"
+    placeholder-class="pc-ph"
+    maxlength="20"
+    data-field="name"
+    bindinput="onInput"
+    bindfocus="onFocus"
+    bindblur="onBlur"
+  />
+
+  <!-- 主规格：数值 + 单位 -->
+  <view class="pc-row">
+    <view class="pc-num-wrap">
+      <text class="pc-label">规格</text>
+      <input
+        class="pc-num"
+        type="digit"
+        value="{{value.quantityValue}}"
+        placeholder="0"
+        placeholder-class="pc-ph"
+        data-field="quantityValue"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+    </view>
+    <picker class="pc-unit-pick" mode="selector" range="{{unitOptions}}" range-key="label" value="{{unitIndex}}" bindchange="onUnitChange">
+      <view class="pc-unit">{{unitOptions[unitIndex].label}}<text class="pc-arrow">▾</text></view>
+    </picker>
+  </view>
+
+  <!-- 原售价 -->
+  <view class="pc-row">
+    <text class="pc-label">原价</text>
+    <input
+      class="pc-num"
+      type="digit"
+      value="{{value.originalPriceYuan}}"
+      placeholder="0.00"
+      placeholder-class="pc-ph"
+      data-field="originalPriceYuan"
+      bindinput="onInput"
+      bindfocus="onFocus"
+      bindblur="onBlur"
+    />
+    <text class="pc-yuan">元</text>
+  </view>
+
+  <view class="pc-divider"></view>
+
+  <!-- 赠品 -->
+  <view class="pc-switch-row">
+    <text class="pc-switch-label">含赠品</text>
+    <switch checked="{{value.giftEnabled}}" data-field="giftEnabled" bindchange="onSwitch" color="#2F4F3E" />
+  </view>
+  <view wx:if="{{value.giftEnabled}}" class="pc-sub">
+    <input
+      class="pc-num pc-num-sm"
+      type="digit"
+      value="{{value.giftQuantityValue}}"
+      placeholder="0"
+      placeholder-class="pc-ph"
+      data-field="giftQuantityValue"
+      bindinput="onInput"
+      bindfocus="onFocus"
+      bindblur="onBlur"
+    />
+    <picker class="pc-unit-pick" mode="selector" range="{{giftUnitOptions}}" range-key="label" value="{{giftUnitIndex}}" bindchange="onGiftUnitChange">
+      <view class="pc-unit pc-unit-sm">{{giftUnitOptions[giftUnitIndex].label}}<text class="pc-arrow">▾</text></view>
+    </picker>
+    <text class="pc-sub-note">按 0 元计入总量</text>
+  </view>
+
+  <!-- 优惠 -->
+  <view class="pc-switch-row">
+    <text class="pc-switch-label">有优惠</text>
+    <switch checked="{{value.promoEnabled}}" data-field="promoEnabled" bindchange="onSwitch" color="#2F4F3E" />
+  </view>
+  <block wx:if="{{value.promoEnabled}}">
+    <picker class="pc-promo-pick" mode="selector" range="{{promoTypes}}" range-key="label" value="{{promoIndex}}" bindchange="onPromoTypeChange">
+      <view class="pc-promo">{{promoTypes[promoIndex].label}}<text class="pc-arrow">▾</text></view>
+    </picker>
+
+    <!-- 立减 / 优惠券 / 满减后实付价 / 买N件共X元 的金额 -->
+    <view wx:if="{{promoTypes[promoIndex].type !== 'second-item-discount'}}" class="pc-sub">
+      <text wx:if="{{promoTypes[promoIndex].type === 'bundle-n-for-x'}}" class="pc-inline">买</text>
+      <input
+        wx:if="{{promoTypes[promoIndex].type === 'bundle-n-for-x'}}"
+        class="pc-num pc-num-sm"
+        type="digit"
+        value="{{value.bundleCount}}"
+        placeholder="N"
+        placeholder-class="pc-ph"
+        data-field="bundleCount"
+        bindinput="onNumInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+      <text wx:if="{{promoTypes[promoIndex].type === 'bundle-n-for-x'}}" class="pc-inline">件共</text>
+      <input
+        class="pc-num pc-num-sm"
+        type="digit"
+        value="{{value.promoValueYuan}}"
+        placeholder="0.00"
+        placeholder-class="pc-ph"
+        data-field="promoValueYuan"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+      <text class="pc-yuan">元</text>
+    </view>
+
+    <!-- 第二件折扣：按「折」输入，5 折输入 5 -->
+    <view wx:else class="pc-sub">
+      <text class="pc-inline">第二件打</text>
+      <input
+        class="pc-num pc-num-sm"
+        type="digit"
+        value="{{value.secondItemRate ? value.secondItemRate * 10 : ''}}"
+        placeholder="5"
+        placeholder-class="pc-ph"
+        bindinput="onRateInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+      <text class="pc-inline">折（按买 2 件算）</text>
+    </view>
+  </block>
+
+  <!-- 洗护日化专属：每次用量 -->
+  <block wx:if="{{category === 'daily-care'}}">
+    <view class="pc-divider"></view>
+    <view class="pc-sub pc-peruse">
+      <text class="pc-switch-label">每次用量</text>
+      <input
+        class="pc-num pc-num-sm"
+        type="digit"
+        value="{{value.perUseAmountValue}}"
+        placeholder="选填"
+        placeholder-class="pc-ph"
+        data-field="perUseAmountValue"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+      <view class="pc-unit pc-unit-sm">{{giftUnitOptions[perUseUnitIndex].label}}</view>
+    </view>
+  </block>
+</view>

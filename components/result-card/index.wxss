@@ -1,0 +1,247 @@
+/**
+ * components/result-card/index.wxss —— 实时结果卡样式
+ * 胜者豆绿浅底 + 「更划算」文字标签；败者中性灰弱化。
+ */
+
+/* fade-in-up 关键帧在 app.wxss，组件样式隔离下于此复刻一份 */
+.rc {
+  margin-top: var(--space-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 10rpx 36rpx rgba(61, 58, 51, 0.07);
+  padding: var(--space-lg) 32rpx;
+  animation: rc-fade-in-up 220ms ease both;
+}
+
+@keyframes rc-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- 结论大字 ---------- */
+.rc-headline {
+  font-size: 40rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: var(--color-ink);
+  line-height: 1.4;
+}
+
+.rc-diff {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-top: var(--space-sm);
+}
+
+.rc-diff-num {
+  font-size: 68rpx;
+  font-weight: 800;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.rc-diff-unit {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin-left: 10rpx;
+}
+
+.rc-percent {
+  margin-left: auto;
+  padding: 6rpx 18rpx;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-win-bg);
+  color: var(--color-ink);
+  font-size: 24rpx;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- A / B 对比 ---------- */
+.rc-sides {
+  display: flex;
+  margin-top: var(--space-md);
+}
+
+.rc-side + .rc-side {
+  margin-left: var(--space-sm);
+}
+
+.rc-side {
+  flex: 1;
+  min-width: 0;
+  border-radius: 16rpx;
+  padding: var(--space-sm) 20rpx var(--space-md);
+  transition: background-color 180ms ease;
+}
+
+/* 胜者：豆绿浅底 */
+.rc-win {
+  background-color: var(--color-win-bg);
+  border: 2rpx solid var(--color-win);
+}
+
+/* 败者：中性灰弱化 */
+.rc-lose {
+  background-color: #F4F2ED;
+  border: 2rpx solid transparent;
+}
+
+.rc-side-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48rpx;
+}
+
+.rc-side-tag {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+/* 文字标签，不依赖颜色单独传达「胜出」语义 */
+.rc-win-tag {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--color-ink);
+  border-radius: var(--radius-pill);
+  padding: 4rpx 14rpx;
+}
+
+.rc-price {
+  display: flex;
+  align-items: baseline;
+  margin-top: 6rpx;
+}
+
+.rc-price-num {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-lose .rc-price-num {
+  color: var(--color-text-secondary);
+}
+
+.rc-price-unit {
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  margin-left: 6rpx;
+}
+
+.rc-subline {
+  margin-top: 8rpx;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4rpx;
+  column-gap: 16rpx;
+}
+
+.rc-sub-item {
+  font-size: 20rpx;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-totals {
+  margin-top: var(--space-sm);
+  border-top: 2rpx dashed var(--color-border);
+  padding-top: var(--space-xs);
+}
+
+.rc-total-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8rpx;
+  min-height: 40rpx;
+}
+
+.rc-total-label {
+  font-size: 20rpx;
+  color: var(--color-neutral);
+  flex-shrink: 0;
+}
+
+.rc-total-value {
+  font-size: 22rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---------- 每次使用成本 ---------- */
+.rc-peruse {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) 24rpx;
+  border-radius: 16rpx;
+  background-color: var(--color-win-bg);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 6rpx;
+  column-gap: 20rpx;
+}
+
+.rc-peruse-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.rc-peruse-item {
+  font-size: 24rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-peruse-delta {
+  margin-left: auto;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* ---------- 明细 ---------- */
+.rc-details {
+  margin-top: var(--space-md);
+}
+
+.rc-details-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.rc-detail-line {
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  opacity: 0.85;
+  word-break: break-all;
+}
+
+/* ---------- 提示 ---------- */
+.rc-notice {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) 24rpx;
+  border-radius: 16rpx;
+  background-color: var(--color-warn-bg);
+  border-left: 8rpx solid var(--color-warn);
+  font-size: 22rpx;
+  color: #8A6B3F;
+  line-height: 1.7;
+}

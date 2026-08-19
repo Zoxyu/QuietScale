@@ -1,0 +1,1505 @@
+{
+  "version": "2026.08",
+  "lastRevised": "2026-07-01",
+  "editorNote": "季节经验参考，非实时市场价",
+  "items": [
+    {
+      "productName": "菠菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        3,
+        4,
+        5,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1,
+        2,
+        9
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "春秋两季口感最佳，夏季多为大棚或高原供应",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "油麦菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        3,
+        11
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 4.5,
+      "supplyNote": "夏秋露天供应充足",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "生菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        12,
+        1,
+        2
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "喜冷凉，夏季供应相对偏紧",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "小白菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        3,
+        4,
+        5,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4,
+      "supplyNote": "复种指数高，全年供应较稳定",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "油菜",
+      "category": "叶菜",
+      "cityGroup": "北方",
+      "months": [
+        3,
+        4,
+        5,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        6,
+        7,
+        8
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4,
+      "supplyNote": "春秋为最佳上市期",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "空心菜",
+      "category": "叶菜",
+      "cityGroup": "南方",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "夏季当家叶菜，耐热喜湿",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "苋菜",
+      "category": "叶菜",
+      "cityGroup": "南方",
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 6,
+      "supplyNote": "典型夏季叶菜，入秋后供应减少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "韭菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        3,
+        4,
+        5,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        6,
+        7,
+        8,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "春秋头茬风味最佳，夏季纤维偏多",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "芹菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1,
+        2,
+        3
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "秋冬大量上市，夏季价格偏高",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "大白菜",
+      "category": "叶菜",
+      "cityGroup": "北方",
+      "months": [
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1,
+        2
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 0.8,
+      "typicalHigh": 2,
+      "supplyNote": "冬储主力菜，夏季为冷库或高山货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "圆白菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1,
+        4,
+        8,
+        9
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 1,
+      "typicalHigh": 3,
+      "supplyNote": "耐储运，全年供应较稳定",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "茼蒿",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "stableMonths": [
+        4
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 6,
+      "supplyNote": "喜冷凉，冬春为当季",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "香菜",
+      "category": "叶菜",
+      "cityGroup": "全国",
+      "months": [
+        10,
+        11,
+        12,
+        2,
+        3,
+        4
+      ],
+      "stableMonths": [
+        5,
+        9
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 8,
+      "supplyNote": "夏季高温期供应偏紧，价格波动大",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "土豆",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "stableMonths": [
+        1,
+        2,
+        3,
+        4,
+        8,
+        9,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 3.5,
+      "supplyNote": "耐储存，全年供应稳定，夏秋为新薯上市期",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "红薯",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1,
+        2,
+        3
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 5,
+      "supplyNote": "秋冬集中上市，其余时间为窖藏货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "白萝卜",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        10,
+        11,
+        12,
+        1
+      ],
+      "stableMonths": [
+        2,
+        3
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 0.8,
+      "typicalHigh": 2.5,
+      "supplyNote": "冬季当家菜，夏季供应较少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "胡萝卜",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        12,
+        1,
+        2
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 3.5,
+      "supplyNote": "夏秋季新货上市，耐储存",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "山药",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        10,
+        11,
+        12,
+        1,
+        2
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 8,
+      "supplyNote": "秋冬采挖上市，夏季多为冷库货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "莲藕",
+      "category": "根茎",
+      "cityGroup": "南方",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        7,
+        12
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "夏末至秋大量上市，鲜藕风味最佳",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "芋头",
+      "category": "根茎",
+      "cityGroup": "南方",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 7,
+      "supplyNote": "秋季集中采收上市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "洋葱",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        9,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 3.5,
+      "supplyNote": "夏季集中收获，耐储存",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "生姜",
+      "category": "根茎",
+      "cityGroup": "全国",
+      "months": [
+        10,
+        11
+      ],
+      "stableMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 10,
+      "supplyNote": "秋季新姜上市，其余时间为窖藏姜",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "莴笋",
+      "category": "根茎",
+      "cityGroup": "西南",
+      "months": [
+        3,
+        4,
+        5,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        12,
+        1
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4.5,
+      "supplyNote": "春秋两季最佳，夏季供应偏少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "春笋",
+      "category": "根茎",
+      "cityGroup": "南方",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 8,
+      "supplyNote": "春季时令，其余月份基本无鲜笋",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "冬笋",
+      "category": "根茎",
+      "cityGroup": "南方",
+      "months": [
+        12,
+        1,
+        2
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 12,
+      "supplyNote": "冬季时令，产量有限价格偏高",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "番茄",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5.5,
+      "supplyNote": "夏季露天大量上市，冬季为大棚货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "茄子",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4.5,
+      "supplyNote": "夏季当季，冬季大棚价格偏高",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "黄瓜",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        4,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 4,
+      "supplyNote": "夏秋供应充足，冬季为大棚货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "青椒",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4.5,
+      "supplyNote": "夏季为当季露地菜",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "辣椒",
+      "category": "茄果",
+      "cityGroup": "西南",
+      "months": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        5
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "夏秋集中上市，品种繁多",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "西葫芦",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 3.5,
+      "supplyNote": "夏季当季，供应量大",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "丝瓜",
+      "category": "茄果",
+      "cityGroup": "南方",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4.5,
+      "supplyNote": "夏季当季瓜菜",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "苦瓜",
+      "category": "茄果",
+      "cityGroup": "南方",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 5,
+      "supplyNote": "夏季当季，入秋供应减少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "冬瓜",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        11
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 0.8,
+      "typicalHigh": 2,
+      "supplyNote": "夏末秋初上市，耐储存",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "南瓜",
+      "category": "茄果",
+      "cityGroup": "全国",
+      "months": [
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        8,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 1.5,
+      "typicalHigh": 3.5,
+      "supplyNote": "秋季采收，耐储存",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "秋葵",
+      "category": "茄果",
+      "cityGroup": "南方",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 8,
+      "supplyNote": "夏季当季，冷凉季节供应少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "佛手瓜",
+      "category": "茄果",
+      "cityGroup": "西南",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4,
+      "supplyNote": "秋季集中上市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "豇豆",
+      "category": "豆类",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 6.5,
+      "supplyNote": "夏季当季，冬季为大棚或产地调运",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "四季豆",
+      "category": "豆类",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "stableMonths": [
+        4,
+        8
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 7,
+      "supplyNote": "春秋两季为主，盛夏高温期坐果偏少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "毛豆",
+      "category": "豆类",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        5,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 7,
+      "supplyNote": "夏季当季，鲜食风味最佳",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "豌豆",
+      "category": "豆类",
+      "cityGroup": "南方",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 8,
+      "supplyNote": "春季时令，其余时间为冷冻或外地货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "蚕豆",
+      "category": "豆类",
+      "cityGroup": "南方",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 8,
+      "supplyNote": "春季时令，鲜蚕豆上市期短",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "荷兰豆",
+      "category": "豆类",
+      "cityGroup": "南方",
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 10,
+      "supplyNote": "冬春当季，夏季供应偏少",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "扁豆",
+      "category": "豆类",
+      "cityGroup": "全国",
+      "months": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        6
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 6,
+      "supplyNote": "夏秋当季供应",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "西瓜",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        5,
+        9
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 1,
+      "typicalHigh": 3,
+      "supplyNote": "盛夏大量上市，价格全年最低时段",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "香瓜",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        5
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "夏季当季甜瓜",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "葡萄",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        6,
+        10
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 12,
+      "supplyNote": "夏秋集中上市，品种价格差异大",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "桃子",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        5,
+        9
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 9,
+      "supplyNote": "夏季当季，品种多供应足",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "油桃",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        5
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 8,
+      "supplyNote": "夏季当季",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "荔枝",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        6,
+        7
+      ],
+      "stableMonths": [
+        5
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 6,
+      "typicalHigh": 15,
+      "supplyNote": "初夏时令，上市期短",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "龙眼",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        7,
+        8
+      ],
+      "stableMonths": [
+        9
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 12,
+      "supplyNote": "盛夏时令",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "芒果",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "stableMonths": [
+        4,
+        9
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 5,
+      "typicalHigh": 12,
+      "supplyNote": "夏季为主产季",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "樱桃",
+      "category": "水果",
+      "cityGroup": "北方",
+      "months": [
+        5,
+        6
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 15,
+      "typicalHigh": 40,
+      "supplyNote": "初夏时令，上市期短价格偏高",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "草莓",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 10,
+      "typicalHigh": 30,
+      "supplyNote": "冬春大棚水果，夏季基本下市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "蓝莓",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        5,
+        6,
+        7
+      ],
+      "stableMonths": [
+        4
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 15,
+      "typicalHigh": 35,
+      "supplyNote": "初夏当季，其余时间为冷库或进口",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "杨梅",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        6
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 8,
+      "typicalHigh": 20,
+      "supplyNote": "初夏时令，鲜果期极短",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "香蕉",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 4.5,
+      "supplyNote": "热带常年供应，价格稳定",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "苹果",
+      "category": "水果",
+      "cityGroup": "北方",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        12,
+        1,
+        2
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 8,
+      "supplyNote": "秋季新果上市，其余为冷库货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "梨",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        11
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "夏秋集中上市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "石榴",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        9,
+        10
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 9,
+      "supplyNote": "秋季时令水果",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "柿子",
+      "category": "水果",
+      "cityGroup": "全国",
+      "months": [
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "秋季时令",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "柑橘",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        10,
+        11,
+        12,
+        1,
+        2
+      ],
+      "stableMonths": [
+        3
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 7,
+      "supplyNote": "秋冬当家水果，夏季为晚熟品种或库存货",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "橙子",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "stableMonths": [],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 7,
+      "supplyNote": "冬春当季，夏季多为库存或进口",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "柚子",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "stableMonths": [
+        1
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2,
+      "typicalHigh": 5,
+      "supplyNote": "秋冬大量上市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "猕猴桃",
+      "category": "水果",
+      "cityGroup": "西南",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        7,
+        12
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 10,
+      "supplyNote": "秋季集中上市",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "火龙果",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "stableMonths": [
+        4,
+        12
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3.5,
+      "typicalHigh": 8,
+      "supplyNote": "夏秋多批次采收，供应充足",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "菠萝",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "stableMonths": [
+        2
+      ],
+      "status": "off-season",
+      "unit": "元/斤",
+      "typicalLow": 2.5,
+      "typicalHigh": 6,
+      "supplyNote": "春季为主产季",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "哈密瓜",
+      "category": "水果",
+      "cityGroup": "北方",
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "stableMonths": [
+        6
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 3,
+      "typicalHigh": 7,
+      "supplyNote": "夏秋当季，主产区为西北",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "无花果",
+      "category": "水果",
+      "cityGroup": "南方",
+      "months": [
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [
+        7
+      ],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 6,
+      "typicalHigh": 12,
+      "supplyNote": "夏秋当季，鲜果不耐储运",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "鲜枣",
+      "category": "水果",
+      "cityGroup": "北方",
+      "months": [
+        8,
+        9,
+        10
+      ],
+      "stableMonths": [],
+      "status": "best",
+      "unit": "元/斤",
+      "typicalLow": 4,
+      "typicalHigh": 10,
+      "supplyNote": "秋季时令水果",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "猪肉",
+      "category": "猪肉",
+      "cityGroup": "全国",
+      "months": [],
+      "stableMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 13,
+      "typicalHigh": 22,
+      "supplyNote": "全年稳定供应，节前需求高峰价格略升",
+      "lastRevised": "2026-07-01"
+    },
+    {
+      "productName": "鸡蛋",
+      "category": "鸡蛋",
+      "cityGroup": "全国",
+      "months": [],
+      "stableMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "status": "stable",
+      "unit": "元/斤",
+      "typicalLow": 4.2,
+      "typicalHigh": 6.5,
+      "supplyNote": "全年稳定供应，夏季高温期产量略降",
+      "lastRevised": "2026-07-01"
+    }
+  ]
+}

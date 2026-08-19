@@ -1,0 +1,169 @@
+<!-- pages/market-guide/index.wxml —— 「菜场指南」 -->
+<view class="page">
+
+  <!-- 顶部标题 + 数据等级徽标 -->
+  <view class="header fade-in-up">
+    <view class="title-block">
+      <view class="title-row">
+        <view class="seal">秤</view>
+        <view>
+          <view class="title">菜场指南</view>
+          <view class="subtitle">参考价 · 挑选 · 时令</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{gradeLabel}}" class="grade-badge">{{gradeLabel}}</view>
+  </view>
+
+  <!-- A. 城市与渠道 -->
+  <view class="card selector-card fade-in-up">
+    <view class="selector-block">
+      <view class="selector-label">城市</view>
+      <scroll-view class="chip-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="chip-track">
+          <view
+            wx:for="{{cityOptions}}"
+            wx:key="key"
+            class="chip {{cityKey === item.key ? 'chip-active' : ''}}"
+            data-key="{{item.key}}"
+            bind:tap="onCityTap"
+          >{{item.name}}</view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="selector-block">
+      <view class="selector-label">渠道</view>
+      <scroll-view class="chip-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="chip-track">
+          <view
+            wx:for="{{channelOptions}}"
+            wx:key="key"
+            class="chip {{channel === item.key ? 'chip-active' : ''}}"
+            data-key="{{item.key}}"
+            bind:tap="onChannelTap"
+          >{{item.name}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- B. 今日参考价 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">今日参考价</text>
+      <text class="section-sub">单位以条目为准</text>
+    </view>
+
+    <view wx:if="{{filterNote}}" class="filter-note">{{filterNote}}</view>
+
+    <view wx:if="{{loading}}" class="empty-card card">正在为你整理参考价…</view>
+    <view wx:elif="{{!items.length}}" class="empty-card card">暂无参考数据，换个城市或渠道试试。</view>
+    <block wx:else>
+      <price-item
+        wx:for="{{items}}"
+        wx:key="id"
+        item="{{item}}"
+        bind:open="onItemOpen"
+      />
+    </block>
+  </view>
+
+  <!-- C. 我看到的价格 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">我看到的价格</text>
+      <text class="section-sub">对比近期参考，心里有数</text>
+    </view>
+
+    <view class="card judge-card">
+      <picker
+        mode="selector"
+        range="{{observedPickerRange}}"
+        value="{{observedIndex}}"
+        bindchange="onObservedPick"
+        disabled="{{!observedPickerRange.length}}"
+      >
+        <view class="picker-field tap-area">
+          <text class="picker-label">商品</text>
+          <text class="picker-value {{observedName ? '' : 'picker-placeholder'}}">
+            {{observedName || '请先选择一个商品'}}
+          </text>
+          <text class="picker-arrow">⌄</text>
+        </view>
+      </picker>
+
+      <view class="price-field">
+        <text class="picker-label">我看到的价格</text>
+        <view class="price-input-wrap">
+          <input
+            class="price-input"
+            type="digit"
+            placeholder="输入价格"
+            placeholder-class="price-placeholder"
+            value="{{observedPriceInput}}"
+            bindinput="onPriceInput"
+            disabled="{{!observedPickerRange.length}}"
+          />
+          <text class="price-unit">{{observedUnit || '元'}}</text>
+        </view>
+      </view>
+
+      <!-- 判断结果 -->
+      <view wx:if="{{judgeView}}" class="judge-result {{judgeView.theme}}">
+        <view class="judge-head">
+          <text class="judge-symbol">{{judgeView.symbol}}</text>
+          <text class="judge-level">{{judgeView.levelLabel}}</text>
+        </view>
+        <view class="judge-basis">{{judgeView.basis}}</view>
+        <view class="judge-disclaimer">{{judgeView.disclaimer}}</view>
+      </view>
+      <view wx:elif="{{observedPickerRange.length}}" class="judge-hint">
+        输入价格后，会为你对比近期参考价。
+      </view>
+    </view>
+  </view>
+
+  <!-- D. 新手挑选指南 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">新手挑选指南</text>
+      <text class="section-sub">看什么 · 避什么 · 怎么买</text>
+    </view>
+    <guide-card
+      wx:for="{{guideCards}}"
+      wx:key="title"
+      no="{{index + 1}}"
+      title="{{item.title}}"
+      look="{{item.look}}"
+      avoid="{{item.avoid}}"
+      buy="{{item.buy}}"
+      tip="{{item.tip}}"
+    />
+  </view>
+
+  <!-- E. 份量与重量换算器 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">份量与重量换算</text>
+      <text class="section-sub">斤两克，一次说明白</text>
+    </view>
+    <portion-converter />
+  </view>
+
+  <!-- F. 当季时令雷达 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">当季时令雷达</text>
+      <text class="section-sub">{{seasonalMonth}} 月供应速览</text>
+    </view>
+    <seasonal-radar
+      items="{{seasonalItems}}"
+      picks="{{seasonalPicks}}"
+      month="{{seasonalMonth}}"
+      tip="{{seasonalTip}}"
+      groups="{{seasonalGroups}}"
+    />
+  </view>
+
+  <view class="page-footer">参考区间仅供比价，实际价格受品质、产地与渠道影响。</view>
+</view>

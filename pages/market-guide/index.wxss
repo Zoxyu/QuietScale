@@ -1,0 +1,323 @@
+/**
+ * pages/market-guide/index.wxss —— 「菜场指南」样式
+ * 色值一律引用 app.wxss 页面级 CSS 变量；判断结果用色不用红。
+ */
+
+.page {
+  min-height: 100vh;
+  padding: 40rpx 28rpx 48rpx;
+  box-sizing: border-box;
+}
+
+/* ---------- 顶部 ---------- */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+}
+
+.seal {
+  width: 76rpx;
+  height: 76rpx;
+  border: 3rpx solid var(--color-ink);
+  border-radius: 16rpx;
+  color: var(--color-ink);
+  font-size: 40rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-md);
+  transform: rotate(-4deg);
+  background-color: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 46rpx;
+  font-weight: 700;
+  letter-spacing: 6rpx;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  letter-spacing: 2rpx;
+}
+
+/* 数据等级徽标：弱化但可见 */
+.grade-badge {
+  flex-shrink: 0;
+  margin-top: 8rpx;
+  padding: 8rpx 18rpx;
+  border-radius: var(--radius-pill);
+  border: 2rpx solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- A. 城市与渠道 ---------- */
+.selector-card {
+  margin-top: var(--space-lg);
+  padding: 26rpx 26rpx 10rpx;
+}
+
+.selector-block {
+  margin-bottom: var(--space-sm);
+}
+
+.selector-label {
+  font-size: 23rpx;
+  color: var(--color-text-secondary);
+  letter-spacing: 2rpx;
+  margin-bottom: 6rpx;
+}
+
+.chip-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.chip-track {
+  display: inline-flex;
+  padding: 6rpx 2rpx;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 点击热区 ≥ 88rpx：flex 居中文本保持胶囊观感，横滑容器随内容自适应高度 */
+  min-height: 88rpx;
+  padding: 0 28rpx;
+  margin-right: var(--space-sm);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg);
+  border: 2rpx solid var(--color-border);
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  transition: all 180ms ease;
+}
+
+.chip-active {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 6rpx 16rpx rgba(47, 79, 62, 0.22);
+}
+
+/* ---------- 通用分区 ---------- */
+.section {
+  margin-top: var(--space-xl);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+  padding: 0 4rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 3rpx;
+  color: var(--color-text);
+}
+
+.section-sub {
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+/* 放宽提示：浅杏浅底 */
+.filter-note {
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12rpx;
+  background-color: var(--color-warn-bg);
+  color: #7A5B2E;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.empty-card {
+  padding: 48rpx 30rpx;
+  text-align: center;
+  font-size: 27rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- C. 我看到的价格 ---------- */
+.judge-card {
+  padding: 26rpx 30rpx 30rpx;
+}
+
+.picker-field {
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+}
+
+.picker-label {
+  width: 170rpx;
+  flex-shrink: 0;
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+}
+
+.picker-value {
+  flex: 1;
+  font-size: 29rpx;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-placeholder {
+  color: var(--color-neutral);
+}
+
+.picker-arrow {
+  font-size: 30rpx;
+  color: var(--color-text-secondary);
+  margin-left: var(--space-sm);
+}
+
+.price-field {
+  margin-top: var(--space-sm);
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+  border-top: 2rpx solid var(--color-border);
+  padding-top: var(--space-sm);
+}
+
+.price-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.price-input {
+  flex: 1;
+  min-height: 88rpx;
+  font-size: 34rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-placeholder {
+  color: var(--color-neutral);
+  font-size: 28rpx;
+}
+
+.price-unit {
+  flex-shrink: 0;
+  margin-left: var(--space-sm);
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+}
+
+/* 判断结果五档：偏低豆绿 / 合理墨绿 / 偏高浅杏 / 数据不足中性灰 */
+.judge-result {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: 14rpx;
+}
+
+.judge-low {
+  background-color: var(--color-win-bg);
+}
+
+.judge-fair {
+  background-color: rgba(47, 79, 62, 0.08);
+}
+
+.judge-high {
+  background-color: var(--color-warn-bg);
+}
+
+.judge-muted {
+  background-color: #F3F1EC;
+}
+
+.judge-head {
+  display: flex;
+  align-items: center;
+}
+
+.judge-symbol {
+  font-size: 30rpx;
+  margin-right: var(--space-sm);
+  color: var(--color-ink);
+}
+
+.judge-high .judge-symbol {
+  color: #7A5B2E;
+}
+
+.judge-level {
+  font-size: 30rpx;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+  color: var(--color-ink);
+}
+
+.judge-high .judge-level {
+  color: #7A5B2E;
+}
+
+.judge-muted .judge-level {
+  color: var(--color-text-secondary);
+}
+
+.judge-muted .judge-symbol {
+  color: var(--color-text-secondary);
+}
+
+.judge-basis {
+  margin-top: var(--space-sm);
+  font-size: 27rpx;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.judge-disclaimer {
+  margin-top: var(--space-sm);
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.judge-hint {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12rpx;
+  background-color: #F3F1EC;
+  font-size: 25rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 页脚 ---------- */
+.page-footer {
+  margin-top: var(--space-xl);
+  padding: 0 var(--space-md);
+  text-align: center;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: var(--color-neutral);
+}

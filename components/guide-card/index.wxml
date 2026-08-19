@@ -1,0 +1,31 @@
+<!-- components/guide-card/index.wxml —— 新手挑选指南折叠卡 -->
+<view class="card guide {{open ? 'guide-open' : ''}}">
+  <view class="guide-head tap-area" hover-class="hover-soft" bind:tap="onToggle">
+    <view class="guide-title-wrap">
+      <text class="guide-no">{{no}}</text>
+      <text class="guide-title">{{title}}</text>
+    </view>
+    <text class="guide-arrow">▾</text>
+  </view>
+
+  <view class="guide-body">
+    <view class="guide-body-inner">
+      <view class="guide-row">
+        <text class="row-tag tag-look">看</text>
+        <text class="row-text">{{look}}</text>
+      </view>
+      <view wx:if="{{avoid}}" class="guide-row">
+        <text class="row-tag tag-avoid">避</text>
+        <text class="row-text">{{avoid}}</text>
+      </view>
+      <view wx:if="{{buy}}" class="guide-row">
+        <text class="row-tag tag-buy">买</text>
+        <text class="row-text">{{buy}}</text>
+      </view>
+      <view wx:if="{{tip}}" class="guide-row">
+        <text class="row-tag tag-tip">提示</text>
+        <text class="row-text">{{tip}}</text>
+      </view>
+    </view>
+  </view>
+</view>

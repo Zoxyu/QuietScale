@@ -1,0 +1,74 @@
+/**
+ * app.wxss —— 全局样式
+ * 设计基调：米白纸感 + 墨绿点缀，温和、克制、贴近菜场烟火气。
+ * 页面级 CSS 变量统一定义在此，页面样式一律引用变量，不写死色值。
+ */
+
+page {
+  /* 色彩 */
+  --color-bg: #FAF7F2;            /* 米白背景 */
+  --color-surface: #FFFFFF;        /* 卡片底 */
+  --color-text: #3D3A33;           /* 深暖灰正文 */
+  --color-text-secondary: #8A8578; /* 次级文字 */
+  --color-ink: #2F4F3E;            /* 墨绿（主强调/选中态） */
+  --color-win: #A8C3A0;            /* 豆绿（胜出标识） */
+  --color-win-bg: #EDF3EA;         /* 豆绿浅底 */
+  --color-warn: #F2C48D;           /* 浅杏（提示/劣势标识） */
+  --color-warn-bg: #FBF1E2;        /* 浅杏底 */
+  --color-neutral: #B9B5AC;        /* 中性灰（平局/禁用） */
+  --color-border: #E8E3D9;         /* 暖灰描边 */
+
+  /* 圆角与间距 */
+  --radius-card: 20rpx;
+  --radius-pill: 999rpx;
+  --space-xs: 8rpx;
+  --space-sm: 16rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
+  --space-xl: 48rpx;
+
+  /* 基础字体：系统字体栈，数字等宽对齐 */
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 通用卡片：白底、圆角、极轻阴影 */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 6rpx 24rpx rgba(61, 58, 51, 0.05);
+}
+
+/* 入场动画：220ms 淡入 + 上移，页面级错落可用 animation-delay 叠加 */
+.fade-in-up {
+  animation: fade-in-up 220ms ease both;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 可点击区域最小触达尺寸 */
+.tap-area {
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 交互状态统一过渡：180ms ease */
+button,
+input,
+view.tap-area {
+  transition: all 180ms ease;
+}

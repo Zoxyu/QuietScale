@@ -1,0 +1,47 @@
+<!-- pages/mine/index.wxml —— 「我的」 -->
+<view class="page">
+
+  <!-- 头部：印章 + 理念 -->
+  <view class="head fade-in-up">
+    <view class="seal">秤</view>
+    <view class="app-name">{{appName}}</view>
+    <view class="motto">{{motto}}</view>
+  </view>
+
+  <!-- 数据说明 -->
+  <view class="section">
+    <view class="section-title">数据说明</view>
+    <view class="card note-card">
+      <view class="note-row" wx:for="{{dataNotes}}" wx:key="key">
+        <text class="note-key">{{item.key}}</text>
+        <text class="note-text">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 隐私说明 -->
+  <view class="section">
+    <view class="section-title">隐私说明</view>
+    <view class="card note-card">
+      <view class="privacy-row" wx:for="{{privacyNotes}}" wx:key="*this">
+        <text class="privacy-dot">✓</text>
+        <text class="note-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于一秤清欢 -->
+  <view class="section">
+    <view class="section-title">关于一秤清欢</view>
+    <view class="card about-card">
+      <view class="about-text">{{aboutText}}</view>
+    </view>
+  </view>
+
+  <!-- 版本号 -->
+  <view class="page-footer">
+    <view>{{appName}} v{{version}}</view>
+    <view class="footer-sub">参考区间仅供比价，实际价格受品质、产地与渠道影响。</view>
+  </view>
+
+</view>

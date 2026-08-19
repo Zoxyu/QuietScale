@@ -1,0 +1,260 @@
+/**
+ * pages/price-detail/index.wxss —— 「价格详情」样式
+ * 色值一律引用 app.wxss 页面级 CSS 变量；偏高价用浅杏，不用红。
+ */
+
+.page {
+  min-height: 100vh;
+  padding: 36rpx 28rpx 48rpx;
+  box-sizing: border-box;
+}
+
+/* ---------- 状态卡（加载中 / 未找到） ---------- */
+.state-card {
+  padding: 72rpx 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+}
+
+.state-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 2rpx;
+}
+
+.state-desc {
+  margin-top: var(--space-sm);
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.state-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88rpx;
+  margin-top: var(--space-lg);
+  padding: 0 44rpx;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-ink);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+}
+
+/* ---------- 头部 ---------- */
+.head-card {
+  padding: 30rpx 30rpx 26rpx;
+}
+
+.head-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.product-name {
+  font-size: 42rpx;
+  font-weight: 700;
+  letter-spacing: 3rpx;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.head-badges {
+  flex-shrink: 0;
+  margin-left: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.badge {
+  padding: 6rpx 16rpx;
+  border-radius: var(--radius-pill);
+  font-size: 21rpx;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.badge + .badge {
+  margin-top: 8rpx;
+}
+
+.badge-level {
+  background-color: var(--color-win-bg);
+  color: var(--color-ink);
+}
+
+.badge-conf {
+  background-color: #F3F1EC;
+  color: var(--color-text-secondary);
+}
+
+.spec-line {
+  margin-top: var(--space-md);
+  font-size: 26rpx;
+  color: var(--color-text);
+}
+
+.caliber-line {
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 通用区块 ---------- */
+.block {
+  margin-top: var(--space-md);
+  padding: 28rpx 30rpx;
+}
+
+.block-title {
+  font-size: 29rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.block-empty {
+  padding: 32rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 参考区间三档 ---------- */
+.price-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.price-cell {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0 18rpx;
+}
+
+.price-cell-mid {
+  border-left: 2rpx solid var(--color-border);
+  border-right: 2rpx solid var(--color-border);
+}
+
+.price-num {
+  font-size: 44rpx;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.price-low-num {
+  color: var(--color-ink);
+}
+
+.price-mid-num {
+  color: var(--color-ink);
+  font-size: 50rpx;
+}
+
+.price-high-num {
+  color: #7A5B2E;
+}
+
+.price-cap {
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  color: var(--color-text-secondary);
+  letter-spacing: 2rpx;
+}
+
+.unit-line {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 2rpx solid var(--color-border);
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 来源与口径 ---------- */
+.meta-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 10rpx 0;
+  font-size: 26rpx;
+}
+
+.meta-key {
+  width: 140rpx;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.meta-val {
+  flex: 1;
+  color: var(--color-text);
+  line-height: 1.55;
+  word-break: break-all;
+}
+
+.source-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.source-url {
+  flex: 1;
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  word-break: break-all;
+}
+
+.copy-btn {
+  flex-shrink: 0;
+  margin-left: var(--space-sm);
+  padding: 8rpx 22rpx;
+  min-height: 60rpx;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  border: 2rpx solid var(--color-ink);
+  color: var(--color-ink);
+  font-size: 23rpx;
+}
+
+.note-text {
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12rpx;
+  background-color: #F3F1EC;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- 免责说明 ---------- */
+.disclaimer-box {
+  margin-top: var(--space-lg);
+  padding: 0 var(--space-sm);
+}
+
+.disclaimer-warn {
+  margin-bottom: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12rpx;
+  background-color: var(--color-warn-bg);
+  color: #7A5B2E;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.disclaimer-text {
+  font-size: 22rpx;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--color-neutral);
+}

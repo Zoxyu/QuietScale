@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "比一比",
+  "usingComponents": {
+    "category-chips": "/components/category-chips/index",
+    "product-card": "/components/product-card/index",
+    "result-card": "/components/result-card/index"
+  }
+}

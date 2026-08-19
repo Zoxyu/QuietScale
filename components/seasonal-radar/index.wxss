@@ -1,0 +1,221 @@
+/**
+ * components/seasonal-radar/index.wxss —— 当季时令雷达样式
+ * 当季点亮为豆绿，非当季暖灰，本月竖线墨绿标记。
+ */
+
+.radar {
+  padding: 30rpx;
+}
+
+/* ---------- 横滑品类选择 ---------- */
+.pick-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.pick-track {
+  display: inline-flex;
+  padding: 4rpx 2rpx;
+}
+
+.pick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 点击热区 ≥ 88rpx：横滑容器随内容自适应高度 */
+  min-height: 88rpx;
+  padding: 0 26rpx;
+  margin-right: var(--space-sm);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg);
+  border: 2rpx solid var(--color-border);
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  transition: all 180ms ease;
+}
+
+.pick-active {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ---------- 圆点矩阵 ---------- */
+.matrix {
+  margin-top: var(--space-lg);
+}
+
+.matrix-label {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.dots {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dot-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+/* 当前月份竖线标记 */
+.now-line {
+  width: 3rpx;
+  height: 14rpx;
+  border-radius: 2rpx;
+  background-color: transparent;
+  margin-bottom: 6rpx;
+  transition: background-color 200ms ease;
+}
+
+.now-line-on {
+  background-color: var(--color-ink);
+}
+
+.dot {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  transition: background-color 240ms ease, transform 240ms ease;
+}
+
+/* 当季点亮：豆绿 */
+.dot-on {
+  background-color: var(--color-win);
+  transform: scale(1.1);
+}
+
+/* 本月外圈描边 */
+.dot-now {
+  box-shadow: 0 0 0 3rpx rgba(47, 79, 62, 0.28);
+}
+
+.dot-m {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  color: var(--color-neutral);
+}
+
+.dot-m-now {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* 图例 */
+.matrix-key {
+  margin-top: var(--space-md);
+  display: flex;
+  align-items: center;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  margin-right: var(--space-lg);
+}
+
+.key-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.key-on {
+  background-color: var(--color-win);
+}
+
+.key-off {
+  background-color: var(--color-border);
+}
+
+.key-now {
+  background-color: var(--color-surface);
+  box-shadow: 0 0 0 3rpx rgba(47, 79, 62, 0.28);
+}
+
+/* ---------- 三组拆分 ---------- */
+.groups {
+  margin-top: var(--space-lg);
+}
+
+.group + .group {
+  margin-top: var(--space-md);
+}
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+}
+
+.group-title {
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.group-sub {
+  margin-left: var(--space-sm);
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+.chips {
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48rpx;
+  padding: 0 20rpx;
+  margin: 0 var(--space-sm) var(--space-sm) 0;
+  border-radius: var(--radius-pill);
+  font-size: 24rpx;
+}
+
+/* 当季优选：豆绿浅底 */
+.chip-best {
+  background-color: var(--color-win-bg);
+  color: var(--color-ink);
+}
+
+/* 平稳供应：中性浅底 */
+.chip-stable {
+  background-color: #F3F1EC;
+  color: var(--color-text-secondary);
+}
+
+/* 反季：浅杏浅底（温和提示，禁红） */
+.chip-off {
+  background-color: var(--color-warn-bg);
+  color: #7A5B2E;
+}
+
+.chip-more {
+  background-color: transparent;
+  color: var(--color-neutral);
+}
+
+/* ---------- 固定时令提示 ---------- */
+.radar-tip {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12rpx;
+  background-color: var(--color-win-bg);
+  color: var(--color-ink);
+  font-size: 24rpx;
+  line-height: 1.6;
+}

@@ -1,0 +1,75 @@
+<!-- components/seasonal-radar/index.wxml —— 当季时令雷达 -->
+<view class="radar card">
+  <!-- 横滑品类选择 -->
+  <scroll-view class="pick-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="pick-track">
+      <view
+        wx:for="{{picks}}"
+        wx:key="*this"
+        class="pick {{index === selectedIndex ? 'pick-active' : ''}}"
+        data-index="{{index}}"
+        bind:tap="onPick"
+      >{{item}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 12 个月圆点矩阵 -->
+  <view class="matrix">
+    <view class="matrix-label">「{{selectedName}}」全年供应</view>
+    <view class="dots">
+      <view
+        wx:for="{{dots}}"
+        wx:key="m"
+        class="dot-cell"
+      >
+        <view class="now-line {{item.isNow ? 'now-line-on' : ''}}"></view>
+        <view class="dot {{item.active ? 'dot-on' : ''}} {{item.isNow ? 'dot-now' : ''}}"></view>
+        <text class="dot-m {{item.isNow ? 'dot-m-now' : ''}}">{{item.m}}</text>
+      </view>
+    </view>
+    <view class="matrix-key">
+      <view class="key-item"><view class="key-dot key-on"></view><text>当季</text></view>
+      <view class="key-item"><view class="key-dot key-off"></view><text>非当季</text></view>
+      <view class="key-item"><view class="key-dot key-now"></view><text>本月</text></view>
+    </view>
+  </view>
+
+  <!-- 三组拆分 -->
+  <view class="groups" wx:if="{{groups}}">
+    <view class="group">
+      <view class="group-head">
+        <text class="group-title">当季优选</text>
+        <text class="group-sub">通常更适合关注的菜</text>
+      </view>
+      <view class="chips">
+        <text wx:for="{{groups.best}}" wx:key="name" class="chip chip-best">{{item.name}}</text>
+        <text wx:if="{{groups.bestMore > 0}}" class="chip chip-more">…另有 {{groups.bestMore}} 样</text>
+      </view>
+    </view>
+
+    <view class="group">
+      <view class="group-head">
+        <text class="group-title">平稳供应</text>
+        <text class="group-sub">全年供应较稳定</text>
+      </view>
+      <view class="chips">
+        <text wx:for="{{groups.stable}}" wx:key="name" class="chip chip-stable">{{item.name}}</text>
+        <text wx:if="{{groups.stableMore > 0}}" class="chip chip-more">…另有 {{groups.stableMore}} 样</text>
+      </view>
+    </view>
+
+    <view class="group">
+      <view class="group-head">
+        <text class="group-title">反季或供应偏少</text>
+        <text class="group-sub">可能存在季节溢价</text>
+      </view>
+      <view class="chips">
+        <text wx:for="{{groups.offSeason}}" wx:key="name" class="chip chip-off">{{item.name}}</text>
+        <text wx:if="{{groups.offSeasonMore > 0}}" class="chip chip-more">…另有 {{groups.offSeasonMore}} 样</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 固定时令提示 -->
+  <view class="radar-tip">{{tip}}</view>
+</view>

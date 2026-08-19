@@ -1,0 +1,49 @@
+<!-- components/portion-converter/index.wxml —— 份量与重量换算器 -->
+<view class="conv card">
+  <!-- 重量速查表 -->
+  <view class="sub-title">重量速查</view>
+  <view class="weight-table">
+    <view
+      class="weight-row tap-area"
+      wx:for="{{weightList}}"
+      wx:key="grams"
+      data-grams="{{item.grams}}"
+      hover-class="hover-soft"
+      bind:tap="onQuick"
+    >
+      <text class="weight-label">{{item.label}}</text>
+      <text class="weight-grams">= {{item.grams}}g</text>
+      <text wx:if="{{item.note}}" class="weight-note">{{item.note}}</text>
+    </view>
+  </view>
+
+  <!-- 克数换算 -->
+  <view class="sub-title">换算一下</view>
+  <view class="convert-row">
+    <input
+      class="grams-input"
+      type="digit"
+      placeholder="输入克数，如 250"
+      placeholder-class="grams-placeholder"
+      value="{{gramsInput}}"
+      bindinput="onInput"
+    />
+    <text class="grams-unit">g</text>
+  </view>
+  <view class="convert-result {{hasResult ? 'convert-result-on' : ''}}">
+    <text wx:if="{{hasResult}}" class="result-text">{{resultText}}</text>
+    <text wx:else class="result-hint">输入克数，自动换算成斤两</text>
+  </view>
+
+  <!-- 常见食材购买量示例 -->
+  <view class="sub-title">购买量经验</view>
+  <view class="examples">
+    <view class="example" wx:for="{{examples}}" wx:key="name">
+      <view class="example-head">
+        <text class="example-name">{{item.name}}</text>
+      </view>
+      <view class="example-text">{{item.estimateText}}</view>
+      <view class="example-disclaimer">{{item.disclaimer}}</view>
+    </view>
+  </view>
+</view>

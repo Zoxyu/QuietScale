@@ -1,0 +1,41 @@
+# 每日参考价数据生成工作流
+# 北京时间次日 06:00（UTC 22:00）自动运行，也可手动触发。
+# 说明：本流程只生成并提交公开参考价数据（dist/ 目录），不保存任何用户数据。
+name: Daily price data generation
+
+on:
+  schedule:
+    # UTC 22:00 = 北京时间次日 06:00
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24（原生 type stripping 直跑 TS）
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Generate price data
+        # 零第三方依赖，无需 npm install；仅使用 Node 内置模块
+        run: node scripts/generate-prices.ts
+
+      - name: Commit dist if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # dist/ 默认在 .gitignore（构建产物目录），生成的数据文件需入库，故强制添加
+          git add -f dist/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "dist/ 无变更，跳过提交"
+          else
+            git commit -m "chore(data): daily price data update"
+            git push
+          fi

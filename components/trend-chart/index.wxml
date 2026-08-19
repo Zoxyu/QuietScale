@@ -1,0 +1,26 @@
+<!-- components/trend-chart/index.wxml —— 近 7 日趋势柱状图 -->
+<view class="chart">
+  <view class="cols">
+    <view class="col" wx:for="{{bars}}" wx:key="day">
+      <text class="val">{{item.text}}</text>
+      <view class="bar-zone">
+        <view
+          class="bar {{item.cls}}"
+          style="height: {{grown ? item.pct : 2}}%; transition-delay: {{item.delay}}ms;"
+        ></view>
+      </view>
+      <text class="day {{item.day === '今日' ? 'day-now' : ''}}">{{item.day}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{showLegend}}" class="legend">
+    <view class="legend-item">
+      <view class="legend-dot dot-low"></view>
+      <text>阶段最低 {{minText}}</text>
+    </view>
+    <view class="legend-item">
+      <view class="legend-dot dot-high"></view>
+      <text>阶段最高 {{maxText}}</text>
+    </view>
+  </view>
+</view>

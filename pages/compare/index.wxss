@@ -1,0 +1,290 @@
+/**
+ * pages/compare/index.wxss —— 「比一比」首页样式
+ * 色值一律引用 app.wxss 页面级 CSS 变量。
+ */
+
+.page {
+  min-height: 100vh;
+  padding: 40rpx 28rpx 0;
+  box-sizing: border-box;
+}
+
+/* ---------- 顶部 ---------- */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 「秤」字小印章：墨绿描边、微倾斜，点到即止的标识 */
+.seal {
+  width: 76rpx;
+  height: 76rpx;
+  border: 3rpx solid var(--color-ink);
+  border-radius: 16rpx;
+  color: var(--color-ink);
+  font-size: 44rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-md);
+  transform: rotate(-4deg);
+  background-color: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 46rpx;
+  font-weight: 700;
+  letter-spacing: 8rpx;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  letter-spacing: 2rpx;
+}
+
+/* 外层热区 ≥88rpx，内层胶囊保持轻盈 */
+.explain-btn {
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0 8rpx;
+}
+
+.explain-pill {
+  height: 60rpx;
+  padding: 0 26rpx;
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  transition: all 180ms ease;
+}
+
+.explain-btn:active .explain-pill {
+  transform: scale(0.94);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+.hover-soft {
+  opacity: 0.7;
+}
+
+/* ---------- VS 交换行 ---------- */
+.vs-row {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.vs-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 160rpx;
+  min-height: 88rpx;
+  justify-content: center;
+}
+
+.vs-badge {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--color-ink);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 26rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(47, 79, 62, 0.12);
+  transition: transform 180ms ease;
+}
+
+.vs-hover {
+  opacity: 0.85;
+}
+
+.vs-btn:active .vs-badge {
+  transform: scale(0.92);
+}
+
+.vs-badge.is-swapping {
+  transform: rotate(180deg);
+  transition: transform 300ms ease;
+}
+
+.vs-hint {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  color: var(--color-neutral);
+}
+
+/* ---------- 双栏卡片 + 交换动画 ---------- */
+.cards-row {
+  display: flex;
+  margin-top: var(--space-sm);
+}
+
+.card-col {
+  flex: 1;
+  min-width: 0;
+  transition: transform 300ms ease;
+}
+
+.card-col + .card-col {
+  margin-left: 16rpx;
+}
+
+/* 先位移动画，动画结束后真正交换数据（见页面 onSwap） */
+.card-col.swap-left {
+  transform: translateX(calc(100% + 16rpx));
+}
+
+.card-col.swap-right {
+  transform: translateX(calc(-100% - 16rpx));
+}
+
+/* 交换数据瞬时禁用过渡：transform 无回程归零（见页面 onSwap） */
+.no-trans {
+  transition: none !important;
+}
+
+/* ---------- 结果区占位与提示 ---------- */
+.result-invalid {
+  margin-top: var(--space-lg);
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--color-neutral);
+  letter-spacing: 2rpx;
+}
+
+.cross-box {
+  margin-top: var(--space-lg);
+  padding: 28rpx 32rpx;
+  border-radius: var(--radius-card);
+  background-color: var(--color-warn-bg);
+  border-left: 8rpx solid var(--color-warn);
+  color: #8A6B3F;
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.page-bottom-space {
+  height: 80rpx;
+}
+
+/* ---------- 计算说明 Bottom Sheet ---------- */
+.sheet-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(45, 42, 36, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+  z-index: 40;
+}
+
+.sheet-mask.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-surface);
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 12rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
+  transform: translateY(100%);
+  transition: transform 300ms cubic-bezier(0.32, 0.72, 0.33, 1);
+  z-index: 50;
+  box-shadow: 0 -12rpx 48rpx rgba(61, 58, 51, 0.12);
+}
+
+.sheet.open {
+  transform: translateY(0);
+}
+
+.sheet-bar {
+  display: flex;
+  justify-content: center;
+  padding: 12rpx 0 4rpx;
+}
+
+.sheet-bar-line {
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background-color: var(--color-border);
+}
+
+.sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-sm);
+}
+
+.sheet-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+  color: var(--color-text);
+}
+
+.sheet-close {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  min-height: 88rpx;
+  padding: 0 8rpx;
+}
+
+.sheet-item {
+  display: flex;
+  align-items: center;
+  min-height: 88rpx;
+  border-top: 2rpx dashed var(--color-border);
+  font-size: 27rpx;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.sheet-num {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background-color: var(--color-win-bg);
+  color: var(--color-ink);
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-md);
+  flex-shrink: 0;
+}

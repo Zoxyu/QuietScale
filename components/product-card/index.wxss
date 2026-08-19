@@ -1,0 +1,197 @@
+/**
+ * components/product-card/index.wxss —— 单边商品输入卡样式
+ * 窄双栏布局：数字大而清晰（≥34rpx、tabular-nums），编辑态抬升。
+ */
+
+.pc-card {
+  box-sizing: border-box;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 6rpx 24rpx rgba(61, 58, 51, 0.05);
+  border: 2rpx solid transparent;
+  padding: var(--space-md) 20rpx var(--space-lg);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+/* 编辑态：轻微抬起 + 阴影加深 + 墨绿细边框 */
+.pc-card.pc-editing {
+  transform: translateY(-4rpx);
+  border-color: var(--color-ink);
+  box-shadow: 0 14rpx 36rpx rgba(47, 79, 62, 0.16);
+}
+
+/* ---------- 侧标 ---------- */
+.pc-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.pc-tag {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 12rpx;
+  background-color: var(--color-ink);
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.pc-tag-note {
+  font-size: 22rpx;
+  color: var(--color-neutral);
+}
+
+/* ---------- 名称 ---------- */
+.pc-name {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 88rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--color-text);
+  border-bottom: 2rpx solid var(--color-border);
+  padding: 8rpx 4rpx;
+}
+
+/* ---------- 行 ---------- */
+.pc-row {
+  display: flex;
+  align-items: center;
+  min-height: 88rpx;
+  margin-top: var(--space-xs);
+}
+
+.pc-label {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  width: 72rpx;
+  flex-shrink: 0;
+}
+
+.pc-num-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* 数字输入：大且易读，等宽数字 */
+.pc-num {
+  flex: 1;
+  min-width: 0;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  min-height: 88rpx;
+}
+
+.pc-num-sm {
+  font-size: 34rpx;
+  max-width: 140rpx;
+  min-height: 72rpx;
+}
+
+.pc-yuan {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin-left: 8rpx;
+  flex-shrink: 0;
+}
+
+.pc-ph {
+  color: var(--color-neutral);
+  font-weight: 400;
+}
+
+/* ---------- 单位 / 优惠 picker ---------- */
+.pc-unit-pick {
+  flex-shrink: 0;
+}
+
+.pc-unit {
+  display: flex;
+  align-items: center;
+  min-height: 88rpx;
+  padding: 0 8rpx 0 20rpx;
+  font-size: 26rpx;
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.pc-unit-sm {
+  min-height: 72rpx;
+  padding-left: 12rpx;
+}
+
+.pc-arrow {
+  margin-left: 6rpx;
+  font-size: 20rpx;
+  color: var(--color-neutral);
+}
+
+.pc-promo-pick {
+  display: block;
+}
+
+.pc-promo {
+  display: flex;
+  align-items: center;
+  min-height: 76rpx;
+  padding: 0 8rpx;
+  font-size: 26rpx;
+  color: var(--color-ink);
+  font-weight: 600;
+  border-bottom: 2rpx dashed var(--color-border);
+}
+
+/* ---------- 分隔线 ---------- */
+.pc-divider {
+  height: 2rpx;
+  background-color: var(--color-border);
+  margin: var(--space-sm) 0;
+  opacity: 0.7;
+}
+
+/* ---------- 开关行与子区 ---------- */
+.pc-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88rpx;
+}
+
+.pc-switch-label {
+  font-size: 26rpx;
+  color: var(--color-text);
+}
+
+.pc-sub {
+  display: flex;
+  align-items: center;
+  padding: 4rpx 0 var(--space-xs);
+}
+
+.pc-sub-note {
+  font-size: 20rpx;
+  color: var(--color-neutral);
+  margin-left: auto;
+  padding-left: 8rpx;
+}
+
+.pc-inline {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin: 0 6rpx;
+  flex-shrink: 0;
+}
+
+.pc-peruse .pc-num-sm {
+  margin-left: var(--space-sm);
+}

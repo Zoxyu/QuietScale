@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/compare/index",
+    "pages/market-guide/index",
+    "pages/price-detail/index",
+    "pages/mine/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FAF7F2",
+    "navigationBarTitleText": "一秤清欢",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAF7F2"
+  },
+  "tabBar": {
+    "color": "#8A8578",
+    "selectedColor": "#2F4F3E",
+    "backgroundColor": "#FAF7F2",
+    "list": [
+      {
+        "pagePath": "pages/compare/index",
+        "text": "比一比"
+      },
+      {
+        "pagePath": "pages/market-guide/index",
+        "text": "菜场指南"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

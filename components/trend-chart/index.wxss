@@ -1,0 +1,105 @@
+/**
+ * components/trend-chart/index.wxss —— 近 7 日趋势柱状图样式
+ * 生长动画由 CSS transition 驱动（页面禁止 wx.createAnimation / canvas）。
+ */
+
+.chart {
+  width: 100%;
+}
+
+.cols {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.val {
+  font-size: 22rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8rpx;
+}
+
+.bar-zone {
+  width: 100%;
+  height: 220rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar {
+  width: 40rpx;
+  border-radius: 10rpx 10rpx 4rpx 4rpx;
+  transition-property: height;
+  transition-duration: 560ms;
+  transition-timing-function: cubic-bezier(0.22, 0.9, 0.32, 1);
+}
+
+/* 普通柱：暖灰中性 */
+.bar-mid {
+  background-color: var(--color-neutral);
+}
+
+/* 最低柱：豆绿（正向） */
+.bar-low {
+  background-color: var(--color-win);
+}
+
+/* 最高柱：浅杏（温和提示，禁恐慌红） */
+.bar-high {
+  background-color: var(--color-warn);
+}
+
+.day {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  color: var(--color-text-secondary);
+}
+
+.day-now {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* 图例：文字 + 色点双重表达 */
+.legend {
+  margin-top: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+.legend-item + .legend-item {
+  margin-left: 28rpx;
+}
+
+.legend-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 6rpx;
+  margin-right: 8rpx;
+}
+
+.dot-low {
+  background-color: var(--color-win);
+}
+
+.dot-high {
+  background-color: var(--color-warn);
+}

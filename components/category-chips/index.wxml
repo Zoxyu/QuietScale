@@ -1,0 +1,13 @@
+<!-- components/category-chips/index.wxml —— 分类 chips -->
+<scroll-view class="chips" scroll-x enhanced show-scrollbar="{{false}}">
+  <view class="chips-track">
+    <view
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="chip {{index === activeIndex ? 'chip-active' : ''}}"
+      hover-class="chip-hover"
+      data-index="{{index}}"
+      bindtap="onTap"
+    >{{item.name}}</view>
+  </view>
+</scroll-view>
