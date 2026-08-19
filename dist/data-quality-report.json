@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-08-20T06:29:21+08:00",
+  "durationMs": 35,
+  "totalSamplesRaw": 1308,
+  "totalSamplesClean": 1308,
+  "samplesPerSource": {
+    "人工维护季节基准（Mock）": 1308
+  },
+  "removedInvalid": 0,
+  "removedOutliers": 0,
+  "removedOutliersByCategory": {},
+  "failedAdapters": [],
+  "recordCount": 45,
+  "estimatedRecordCount": 0,
+  "missingCategories": []
+}

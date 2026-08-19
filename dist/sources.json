@@ -1,0 +1,410 @@
+{
+  "generatedAt": "2026-08-20T06:29:21+08:00",
+  "sources": [
+    {
+      "recordId": "r-001",
+      "cityCode": "national",
+      "channel": "market",
+      "category": "叶菜",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-002",
+      "cityCode": "110000",
+      "channel": "market",
+      "category": "叶菜",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-003",
+      "cityCode": "310000",
+      "channel": "market",
+      "category": "叶菜",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-004",
+      "cityCode": "440100",
+      "channel": "market",
+      "category": "叶菜",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-005",
+      "cityCode": "510100",
+      "channel": "market",
+      "category": "叶菜",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-006",
+      "cityCode": "national",
+      "channel": "market",
+      "category": "根茎",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-007",
+      "cityCode": "110000",
+      "channel": "market",
+      "category": "根茎",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-008",
+      "cityCode": "310000",
+      "channel": "market",
+      "category": "根茎",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-009",
+      "cityCode": "440100",
+      "channel": "market",
+      "category": "根茎",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-010",
+      "cityCode": "510100",
+      "channel": "market",
+      "category": "根茎",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-011",
+      "cityCode": "national",
+      "channel": "community",
+      "category": "茄果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-012",
+      "cityCode": "110000",
+      "channel": "community",
+      "category": "茄果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-013",
+      "cityCode": "310000",
+      "channel": "community",
+      "category": "茄果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-014",
+      "cityCode": "440100",
+      "channel": "community",
+      "category": "茄果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-015",
+      "cityCode": "510100",
+      "channel": "community",
+      "category": "茄果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-016",
+      "cityCode": "national",
+      "channel": "market",
+      "category": "豆类",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-017",
+      "cityCode": "110000",
+      "channel": "market",
+      "category": "豆类",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-018",
+      "cityCode": "310000",
+      "channel": "market",
+      "category": "豆类",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-019",
+      "cityCode": "440100",
+      "channel": "market",
+      "category": "豆类",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-020",
+      "cityCode": "510100",
+      "channel": "market",
+      "category": "豆类",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-021",
+      "cityCode": "national",
+      "channel": "supermarket",
+      "category": "猪肉",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-022",
+      "cityCode": "110000",
+      "channel": "supermarket",
+      "category": "猪肉",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-023",
+      "cityCode": "310000",
+      "channel": "supermarket",
+      "category": "猪肉",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-024",
+      "cityCode": "440100",
+      "channel": "supermarket",
+      "category": "猪肉",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-025",
+      "cityCode": "510100",
+      "channel": "supermarket",
+      "category": "猪肉",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-026",
+      "cityCode": "national",
+      "channel": "supermarket",
+      "category": "鸡蛋",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-027",
+      "cityCode": "110000",
+      "channel": "supermarket",
+      "category": "鸡蛋",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-028",
+      "cityCode": "310000",
+      "channel": "supermarket",
+      "category": "鸡蛋",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-029",
+      "cityCode": "440100",
+      "channel": "supermarket",
+      "category": "鸡蛋",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-030",
+      "cityCode": "510100",
+      "channel": "supermarket",
+      "category": "鸡蛋",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-031",
+      "cityCode": "national",
+      "channel": "market",
+      "category": "水果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-032",
+      "cityCode": "110000",
+      "channel": "market",
+      "category": "水果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-033",
+      "cityCode": "310000",
+      "channel": "market",
+      "category": "水果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-034",
+      "cityCode": "440100",
+      "channel": "market",
+      "category": "水果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-035",
+      "cityCode": "510100",
+      "channel": "market",
+      "category": "水果",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-036",
+      "cityCode": "national",
+      "channel": "supermarket",
+      "category": "大米",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-037",
+      "cityCode": "110000",
+      "channel": "supermarket",
+      "category": "大米",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-038",
+      "cityCode": "310000",
+      "channel": "supermarket",
+      "category": "大米",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-039",
+      "cityCode": "440100",
+      "channel": "supermarket",
+      "category": "大米",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-040",
+      "cityCode": "510100",
+      "channel": "supermarket",
+      "category": "大米",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-041",
+      "cityCode": "national",
+      "channel": "supermarket",
+      "category": "食用油",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-042",
+      "cityCode": "110000",
+      "channel": "supermarket",
+      "category": "食用油",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-043",
+      "cityCode": "310000",
+      "channel": "supermarket",
+      "category": "食用油",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-044",
+      "cityCode": "440100",
+      "channel": "supermarket",
+      "category": "食用油",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    },
+    {
+      "recordId": "r-045",
+      "cityCode": "510100",
+      "channel": "supermarket",
+      "category": "食用油",
+      "sourceName": "人工维护季节基准（Mock）",
+      "sourceUrl": "",
+      "collectedAt": "2026-08-20T06:29:21+08:00"
+    }
+  ]
+}
