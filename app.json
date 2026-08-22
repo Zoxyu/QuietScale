@@ -32,6 +32,7 @@
     ]
   },
   "lazyCodeLoading": "requiredComponents",
+  "__usePrivacyCheck__": true,
   "requiredPrivateInfos": [
     "getLocation"
   ],

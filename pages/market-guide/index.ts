@@ -393,7 +393,7 @@ Page({
     this.loadSeasonal();
     this.loadPrices();
     // 首次进入自动定位（用户尚未手动选择）；定位结果仅用于匹配城市，不上传不保存
-    this.locate();
+    this.locate(false);
   },
 
   /** 同步自定义 tabBar 选中态（菜场指南 = 1） */
@@ -492,14 +492,15 @@ Page({
     if (this.data.locating) {
       return;
     }
-    this.locate();
+    this.locate(false);
   },
 
   /**
    * 获取定位并匹配最近的已启用城市。
    * 隐私约束：经纬度仅在本地用于城市匹配，不上传、不写 storage、不上报。
+   * @param retried 是否已经隐私协议授权后重试（防止无限递归）
    */
-  locate(this: any): void {
+  locate(this: any, retried: boolean): void {
     this.setData({ locating: true, locationHint: '' });
     wx.getLocation({
       type: 'wgs84',
@@ -522,8 +523,23 @@ Page({
           locationHint: '你所在的城市暂未接入参考数据，请手动选择城市'
         });
       },
-      fail: () => {
-        this.setData({ locating: false, locationHint: '定位失败或已拒绝授权，请手动选择城市' });
+      fail: (err: any) => {
+        const errMsg = (err && err.errMsg) || '';
+        // 详细失败原因仅输出到控制台供开发排查，页面对用户只展示简短提示
+        console.warn('[定位] getLocation 失败：', errMsg);
+        // 未同意隐私协议（基础库 2.32.3+ 强制）：弹出官方授权弹窗，同意后重新定位
+        if (!retried && errMsg.indexOf('privacy') >= 0 && typeof wx.requirePrivacyAuthorize === 'function') {
+          wx.requirePrivacyAuthorize({
+            success: () => {
+              this.locate(true);
+            },
+            fail: () => {
+              this.setData({ locating: false, locationHint: '定位失败，请手动选择城市' });
+            }
+          });
+          return;
+        }
+        this.setData({ locating: false, locationHint: '定位失败，请手动选择城市' });
         // 曾被拒绝授权时引导去设置页开启（仅提示，不强制）
         wx.getSetting({
           success: (s: any) => {

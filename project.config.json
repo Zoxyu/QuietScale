@@ -3,7 +3,7 @@
   "appid": "wx77b309b83e7d918d",
   "projectname": "quiet-scale",
   "compileType": "miniprogram",
-  "libVersion": "3.4.10",
+  "libVersion": "3.17.1",
   "setting": {
     "es6": true,
     "enhance": true,
@@ -40,7 +40,22 @@
   },
   "simulatorPluginLibVersion": {},
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      { "type": "folder", "value": "scripts" },
+      { "type": "folder", "value": "tests" },
+      { "type": "folder", "value": "dist" },
+      { "type": "folder", "value": "node_modules" },
+      { "type": "folder", "value": ".github" },
+      { "type": "folder", "value": "typings" },
+      { "type": "suffix", "value": ".md" },
+      { "type": "file", "value": "tsconfig.json" },
+      { "type": "file", "value": "package.json" },
+      { "type": "file", "value": "package-lock.json" },
+      { "type": "file", "value": "mock/markups.json" },
+      { "type": "file", "value": ".gitignore" },
+      { "type": "file", "value": "LICENSE" },
+      { "type": "file", "value": "一称清欢 小程序图标.jpg" }
+    ],
     "include": []
   }
 }
