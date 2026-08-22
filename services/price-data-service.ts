@@ -120,6 +120,7 @@ export async function getPriceDataset(): Promise<{ file: PricesFile; grade: Data
   // 规则 3b：今天已拉取过（重启场景，内存已丢失）→ 遵守每日一次限制，直接用 mock
   const meta = readFetchMeta();
   if (meta && meta.dateKey === dayKey) {
+    console.log('[参考价] 今日已尝试过拉取，直接使用本地基线数据（如需重新拉取请清除缓存）');
     return fallbackMock();
   }
 
@@ -140,11 +141,13 @@ export async function getPriceDataset(): Promise<{ file: PricesFile; grade: Data
         return { file, grade: 'remote' };
       }
       // 数据已过期 → 也写入当日标记（今天已尝试过拉取，不再重试）后降级
+      console.warn('[参考价] 远端数据已过期（expiresAt=' + file.expiresAt + '），降级本地基线');
       writeFetchMeta({ dateKey: dayKey, version: file.version, expiresAt: file.expiresAt });
       return fallbackMock();
     } catch (e) {
       // 规则 3d：任何失败 / 超时 → 失败也视为当日已尝试拉取，写入当日标记，
       // 当日不再重试，安全降级 mock（grade = local_baseline）
+      console.warn('[参考价] 远端拉取失败，降级本地基线（今日不再重试；常见原因：未勾选不校验合法域名/未配置 request 合法域名、网络超时）', e);
       writeFetchMeta({ dateKey: dayKey, version: '', expiresAt: '' });
       return fallbackMock();
     }
