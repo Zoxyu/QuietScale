@@ -161,6 +161,33 @@
   color: var(--color-text-secondary);
 }
 
+/* ---------- 品类分组：弱化字色小标题 ---------- */
+.category-group {
+  margin-bottom: var(--space-md);
+}
+
+.category-group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: var(--space-sm);
+  padding: 16rpx 8rpx 12rpx;
+  border-bottom: 2rpx dashed var(--color-border);
+}
+
+.category-group-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  color: var(--color-text-secondary);
+}
+
+.category-group-count {
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+}
+
 /* ---------- C. 我看到的价格 ---------- */
 .judge-card {
   padding: 26rpx 30rpx 30rpx;

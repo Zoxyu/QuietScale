@@ -8,6 +8,7 @@
  * 2. 城市 / 渠道只存页面 data（内存态），严禁写 storage；
  * 3. applyFilter() 按「所选城市 + 所选渠道」过滤；无该渠道记录时放宽到
  *    该城市任意渠道并标注；城市整体无记录时回退全国参考；
+ *    过滤结果数据驱动按 category 分组（组内按品名排序），不硬编码品类；
  * 4. 「我看到的价格」经 200ms 防抖调用 judgeObservedPrice，结果按五档映射视觉。
  */
 
@@ -44,7 +45,8 @@ const CITY_CODE: Record<CityKey, string> = {
   beijing: '110000',
   shanghai: '310000',
   guangzhou: '440100',
-  chengdu: '510100'
+  chengdu: '510100',
+  fuzhou: '350100'
 };
 
 /** 城市选择项（全国展示为「全国参考」） */
@@ -92,7 +94,7 @@ const GRADE_NAME: Record<DataGrade, string> = {
   local_baseline: '本地参考数据'
 };
 
-/** 9 大品类展示顺序 */
+/** 9 大品类展示顺序（仅用于已知品类排序；数据中出现的新品类按首次出现顺序排在后面） */
 const CATEGORY_ORDER = ['叶菜', '根茎', '茄果', '豆类', '猪肉', '鸡蛋', '水果', '大米', '食用油'];
 
 /** 判断等级 → 中文标签 / 符号 / 视觉主题 */
@@ -121,6 +123,18 @@ interface PriceItemView {
   confidenceLabel: string;
   muted: boolean;
   isWholesale: boolean;
+}
+
+/** 品类分组视图：每组一个分组标题 + 组内条目 */
+interface CategoryGroupView {
+  /** 稳定唯一键（品类名+组序号），供 wxml wx:key 使用，避免品类重名冲突 */
+  key: string;
+  /** 品类名（数据驱动，直接使用记录的 category，如 粮油/肉禽蛋/水产/蔬菜/水果/牛奶） */
+  name: string;
+  /** 组内条目数 */
+  count: number;
+  /** 组内条目（已按品名排序） */
+  items: PriceItemView[];
 }
 
 /** 新手挑选指南内容（看 / 避 / 买 / 提示 三段式，逐字文案） */
@@ -187,10 +201,56 @@ function fmtNum(n: number): string {
   return String(Math.round(n * 100) / 100);
 }
 
-/** 品类排序权重；未知品类排在最后 */
-function categoryRank(category: string): number {
+/**
+ * 品类排序权重：
+ * - 已知品类（CATEGORY_ORDER 内）按表内下标排序；
+ * - 未知品类（数据驱动新增，如福州源的 粮油/肉禽蛋/水产/牛奶）
+ *   按其在当前数据中首次出现的顺序编号，统一排在已知品类之后，
+ *   避免多个未知品类权重相同导致按品名交错、同品类不相邻。
+ */
+function categoryRank(category: string, unknownOrder: number): number {
   const idx = CATEGORY_ORDER.indexOf(category);
-  return idx < 0 ? CATEGORY_ORDER.length : idx;
+  return idx < 0 ? CATEGORY_ORDER.length + unknownOrder : idx;
+}
+
+/**
+ * 过滤后记录 → 「先分桶再组内排序」：
+ * 1. 用 Map 按 category 归拢（Map 保留品类在数据中首次出现的顺序）；
+ * 2. 品类整体按「已知品类权重 → 未知品类首次出现编号」排序；
+ * 3. 组内按品名（zh localeCompare）排序；
+ * 4. 输出扁平有序列表（供商品选择器）与分组视图（含稳定唯一键）。
+ */
+function buildGroups(list: PriceRecord[]): { sorted: PriceRecord[]; groups: CategoryGroupView[] } {
+  const buckets = new Map<string, PriceRecord[]>();
+  for (const r of list) {
+    const bucket = buckets.get(r.category);
+    if (bucket) {
+      bucket.push(r);
+    } else {
+      buckets.set(r.category, [r]);
+    }
+  }
+  // buckets.keys() 即品类首次出现顺序，作为未知品类的编号依据
+  const orderedCategories = Array.from(buckets.keys())
+    .map((name, firstSeen) => ({ name, rank: categoryRank(name, firstSeen) }))
+    .sort((a, b) => a.rank - b.rank)
+    .map((e) => e.name);
+
+  const sorted: PriceRecord[] = [];
+  const groups: CategoryGroupView[] = [];
+  orderedCategories.forEach((name, groupIdx) => {
+    const recs = (buckets.get(name) || [])
+      .slice()
+      .sort((a, b) => a.productName.localeCompare(b.productName, 'zh'));
+    sorted.push(...recs);
+    groups.push({
+      key: `${name}-${groupIdx + 1}`,
+      name,
+      count: recs.length,
+      items: recs.map(toItem)
+    });
+  });
+  return { sorted, groups };
 }
 
 /** 单条记录 → 展示视图 */
@@ -270,7 +330,7 @@ Page({
     loading: true,
     gradeLabel: '',
     filterNote: '',
-    items: [] as PriceItemView[],
+    groups: [] as CategoryGroupView[],
 
     /* C. 我看到的价格 */
     observedPickerRange: [] as string[],
@@ -349,18 +409,13 @@ Page({
     const channelName = CHANNEL_NAME[channel] || channel;
 
     const { list, note } = filterRecords(this._allRecords, cityCode, channel, cityName, channelName);
-    const sorted = list.slice().sort((a, b) => {
-      const rank = categoryRank(a.category) - categoryRank(b.category);
-      if (rank !== 0) {
-        return rank;
-      }
-      return a.productName.localeCompare(b.productName, 'zh');
-    });
+    // 先分桶再组内排序：同品类必然成组，不依赖「与上一条同品类」的脆弱合并
+    const { sorted, groups } = buildGroups(list);
 
     this._filteredList = sorted;
     this.setData({
       filterNote: note,
-      items: sorted.map(toItem),
+      groups,
       observedPickerRange: sorted.map((r) => r.productName),
       observedIndex: 0,
       observedName: sorted.length ? sorted[0].productName : '',

@@ -1,0 +1,387 @@
+{
+  "sourceUrl": "https://fgw.fuzhou.gov.cn/fgwzwgk/fzgggz/jgysf/msspjgxq/zfsp/202608/t20260814_5358779.htm",
+  "title": "2026年8月14日福州市主副食品集超均价表_主副食品_\n福州市发展和改革委员会",
+  "dataDate": "2026-08-14",
+  "publishTime": "2026-08-14 11:04",
+  "fetchedAt": "2026-08-22T16:03:03.218Z",
+  "itemCount": 47,
+  "items": [
+    {
+      "category": "粮油",
+      "productName": "晚籼米",
+      "specification": "标一",
+      "unit": "元/500克",
+      "priceYuan": 2.68,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "粮油",
+      "productName": "粳米",
+      "specification": "标一",
+      "unit": "元/500克",
+      "priceYuan": 2.97,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "粮油",
+      "productName": "富强粉",
+      "specification": "",
+      "unit": "元/500克",
+      "priceYuan": 3.57,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "粮油",
+      "productName": "标准粉",
+      "specification": "",
+      "unit": "元/500克",
+      "priceYuan": 2.49,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "粮油",
+      "productName": "花生油",
+      "specification": "桶装一级",
+      "unit": "元/5升",
+      "priceYuan": 107.01,
+      "normalizedNote": "非按斤计价，保留原始单位，勿盲目折算"
+    },
+    {
+      "category": "粮油",
+      "productName": "菜籽油",
+      "specification": "桶装一级",
+      "unit": "元/5升",
+      "priceYuan": 70.6,
+      "normalizedNote": "非按斤计价，保留原始单位，勿盲目折算"
+    },
+    {
+      "category": "粮油",
+      "productName": "大豆油",
+      "specification": "桶装一级",
+      "unit": "元/5升",
+      "priceYuan": 58.03,
+      "normalizedNote": "非按斤计价，保留原始单位，勿盲目折算"
+    },
+    {
+      "category": "粮油",
+      "productName": "调和油",
+      "specification": "桶装一级",
+      "unit": "元/5升",
+      "priceYuan": 67.31,
+      "normalizedNote": "非按斤计价，保留原始单位，勿盲目折算"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "猪瘦肉",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 14.58,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "猪肋条肉",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 15.15,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "牛肉",
+      "specification": "去骨肉",
+      "unit": "元/500克",
+      "priceYuan": 47.01,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "羊肉",
+      "specification": "带骨肉",
+      "unit": "元/500克",
+      "priceYuan": 44.87,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "鸡肉",
+      "specification": "白条鸡",
+      "unit": "元/500克",
+      "priceYuan": 16.17,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "鸭肉",
+      "specification": "白条鸭",
+      "unit": "元/500克",
+      "priceYuan": 16.56,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "普通鸡蛋",
+      "specification": "新鲜完整",
+      "unit": "元/500克",
+      "priceYuan": 6.6,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "肉禽蛋",
+      "productName": "普通鸭蛋",
+      "specification": "新鲜完整",
+      "unit": "元/500克",
+      "priceYuan": 8.3,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "活草鱼",
+      "specification": "鲜活",
+      "unit": "元/500克",
+      "priceYuan": 11.88,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "活鳙鱼（大头鲢）",
+      "specification": "鲜活",
+      "unit": "元/500克",
+      "priceYuan": 14.08,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "冻带鱼",
+      "specification": "冷冻",
+      "unit": "元/500克",
+      "priceYuan": 22.21,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "黄瓜鱼",
+      "specification": "冰鲜",
+      "unit": "元/500克",
+      "priceYuan": 26.9,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "马胶鱼",
+      "specification": "冰鲜",
+      "unit": "元/500克",
+      "priceYuan": 28.29,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "鱿鱼",
+      "specification": "冰鲜",
+      "unit": "元/500克",
+      "priceYuan": 50.16,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "活明虾",
+      "specification": "鲜活",
+      "unit": "元/500克",
+      "priceYuan": 28.25,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水产",
+      "productName": "活花蛤",
+      "specification": "鲜活",
+      "unit": "元/500克",
+      "priceYuan": 10.01,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "土豆",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 2.29,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "白萝卜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 1.67,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "红萝卜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 2.23,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "蒜苔",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 8.31,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "芹菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 6.87,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "韭菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 5.82,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "油菜(菜心)",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 4.02,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "圆白菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 2.15,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "大白菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 2.27,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "西红柿",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 4.09,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "黄瓜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 3.17,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "茄子",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 3.24,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "豆角",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 6.68,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "青椒",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 5.41,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "尖椒",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 5.07,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "花菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 4.94,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "上海青",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 3.42,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "蔬菜",
+      "productName": "空心菜",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 2.74,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水果",
+      "productName": "苹果",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 8.25,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水果",
+      "productName": "香蕉",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 4.62,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水果",
+      "productName": "梨",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 5.01,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "水果",
+      "productName": "脐橙",
+      "specification": "新鲜",
+      "unit": "元/500克",
+      "priceYuan": 4.89,
+      "normalizedNote": "元/500克 即 元/斤，可直接按斤比价"
+    },
+    {
+      "category": "牛奶",
+      "productName": "纯牛奶",
+      "specification": "盒装",
+      "unit": "元/盒(250ml)",
+      "priceYuan": 2.71,
+      "normalizedNote": "非按斤计价，保留原始单位，勿盲目折算"
+    }
+  ],
+  "parseErrors": []
+}

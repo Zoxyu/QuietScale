@@ -39,6 +39,14 @@ export interface RawSample {
   sourceName: string;
   /** 数据来源链接（可选） */
   sourceUrl?: string;
+  /** 原始单位说明（可选，如「元/500克 即 元/斤」），随记录 note 展示 */
+  unitNote?: string;
+  /**
+   * 单均价源标记（可选）：官方发布的单个均价（每商品每期仅 1 个样本）。
+   * 管线对带此标记的样本跳过 IQR 剔除，并按固定系数展开为参考区间，
+   * 而非多样本分位数聚合。
+   */
+  singleAverage?: true;
 }
 
 /** Adapter 授权状态：active 参与生成；pending-auth 为待授权占位 */

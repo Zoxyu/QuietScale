@@ -57,14 +57,21 @@
     <view wx:if="{{filterNote}}" class="filter-note">{{filterNote}}</view>
 
     <view wx:if="{{loading}}" class="empty-card card">正在为你整理参考价…</view>
-    <view wx:elif="{{!items.length}}" class="empty-card card">暂无参考数据，换个城市或渠道试试。</view>
+    <view wx:elif="{{!groups.length}}" class="empty-card card">暂无参考数据，换个城市或渠道试试。</view>
     <block wx:else>
-      <price-item
-        wx:for="{{items}}"
-        wx:key="id"
-        item="{{item}}"
-        bind:open="onItemOpen"
-      />
+      <!-- 数据驱动：按品类分组展示（组内按品名排序；key 为「品类名+组序号」的稳定唯一键） -->
+      <view wx:for="{{groups}}" wx:for-item="group" wx:key="key" class="category-group">
+        <view class="category-group-title">
+          <text class="category-group-name">{{group.name}}</text>
+          <text class="category-group-count">{{group.count}} 项</text>
+        </view>
+        <price-item
+          wx:for="{{group.items}}"
+          wx:key="id"
+          item="{{item}}"
+          bind:open="onItemOpen"
+        />
+      </view>
     </block>
   </view>
 

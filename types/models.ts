@@ -178,6 +178,8 @@ export interface PriceRecord {
   confidence: Confidence;
   /** 备注 */
   note: string;
+  /** 是否由官方单均价展开而来（管线单均价分支置 true；可选，旧数据可能缺失该字段） */
+  expandedFromSingleAverage?: boolean;
   /** 近 7 日数值（可选，用于趋势展示） */
   trend7d?: number[];
 }
@@ -267,8 +269,8 @@ export interface MarkupTable {
 /** 数据等级：远端兜底 / 本地基线 */
 export type DataGrade = 'remote' | 'local_baseline';
 
-/** 城市键：全国兜底 + 四个示例城市 */
-export type CityKey = 'national' | 'beijing' | 'shanghai' | 'guangzhou' | 'chengdu';
+/** 城市键：全国兜底 + 示例城市 */
+export type CityKey = 'national' | 'beijing' | 'shanghai' | 'guangzhou' | 'chengdu' | 'fuzhou';
 
 /** 城市键 → 中文名映射 */
 export const CITY_NAMES: Record<CityKey, string> = {
@@ -276,8 +278,9 @@ export const CITY_NAMES: Record<CityKey, string> = {
   beijing: '北京',
   shanghai: '上海',
   guangzhou: '广州',
-  chengdu: '成都'
+  chengdu: '成都',
+  fuzhou: '福州'
 };
 
 /** 城市键列表（供选择器遍历，保持展示顺序） */
-export const CITY_KEYS: CityKey[] = ['national', 'beijing', 'shanghai', 'guangzhou', 'chengdu'];
+export const CITY_KEYS: CityKey[] = ['national', 'beijing', 'shanghai', 'guangzhou', 'chengdu', 'fuzhou'];

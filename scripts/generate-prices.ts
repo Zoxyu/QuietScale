@@ -4,10 +4,11 @@
  * 运行方式：在项目根目录执行 `node scripts/generate-prices.ts`
  *
  * 流程：
- * 1. 收集全部 active Adapter，Promise.allSettled 并行拉取（单源超时 8s + 1 次重试）；
+ * 1. 收集全部 active Adapter，Promise.allSettled 并行拉取（单源总预算 20s + 1 次重试，重试前礼貌间隔 1.5s）；
  * 2. 单位归一（kg/g/斤/两/L/ml → 基准单位 g/ml 换算，校验维度一致性）；
  * 3. 异常清理：按品类分组，剔除负值与超出 Q1-1.5×IQR / Q3+1.5×IQR 的价格；
  * 4. 按 城市+渠道+品类 聚合：low/median/high/p25/p75/p90（线性插值）+ sampleCount；
+ * 4b. 单均价源（带 singleAverage 标记）：跳过 IQR，按均价×0.9~×1.25 展开为单条记录；
  * 5. 无本地零售样本但有批发样本时：用 markups.json 系数折算估算零售区间（estimated/low）；
  * 6. 组装 PricesFile（version=当日 YYYY.MM.DD，generatedAt/expiresAt ISO+08:00）；
  * 7. 输出 dist/prices.json、dist/sources.json、dist/data-quality-report.json；
@@ -22,14 +23,25 @@ import { getAdapters } from './adapters/adapter.ts';
 import type { PriceAdapter, RawSample } from './adapters/adapter.ts';
 import './adapters/mock-adapter.ts';
 import './adapters/official-placeholder.ts';
+import './adapters/fuzhou-fgw.ts';
 import { percentile } from '../utils/quantile.ts';
 import { estimateRetailRange } from '../services/wholesale.ts';
 import type { Channel, Confidence, DataLevel, MarkupTable, PriceRecord, PricesFile } from '../types/models.ts';
 
 /* ------------------------------ 常量与基础工具 ------------------------------ */
 
-/** 单源拉取超时（毫秒） */
-const FETCH_TIMEOUT_MS = 8000;
+/**
+ * 单源拉取的总超时预算（毫秒）。
+ * 必须覆盖「多请求型」Adapter 的最坏耗时：如福州源内部为
+ * 列表页（自身 8s 上限）→ 间隔 1.2s → 详情页（自身 8s 上限），最坏约 17.2s，
+ * 故外层预算取 20000ms。各 Adapter 内部已对单次请求设 8s 上限
+ * （见各 Adapter 的 REQUEST_TIMEOUT_MS，AbortController 强制中断），
+ * 外层只控制单源总预算，不再短于内部多请求组合的最坏耗时。
+ */
+const FETCH_TIMEOUT_MS = 20000;
+
+/** 重试前的礼貌间隔（毫秒）：避免两轮请求紧贴叠加，也给上一轮未中断的请求留出被 Adapter 内部超时回收的时间 */
+const RETRY_BACKOFF_MS = 1500;
 
 /** 北京时间偏移（毫秒） */
 const BJ_OFFSET_MS = 8 * 3600 * 1000;
@@ -158,13 +170,24 @@ function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise
   });
 }
 
-/** 单源拉取：失败重试 1 次，两次都失败则抛错 */
+/** 毫秒等待（重试前的礼貌间隔用） */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * 单源拉取：失败重试 1 次，两次都失败则抛错。
+ * 说明：withTimeout 超时后仅 reject、无法中断底层请求；各 Adapter 内部已对单次请求
+ * 设 8s 上限（AbortController），外层总预算（20s）大于任何多请求组合的最坏耗时，
+ * 叠加重试前的礼貌间隔，避免两轮请求重叠造成双倍请求。
+ */
 async function fetchWithRetry(adapter: PriceAdapter, dateKey: string): Promise<RawSample[]> {
   try {
     return await withTimeout(adapter.fetchSamples(dateKey), FETCH_TIMEOUT_MS, adapter.name);
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
-    log(`⚠ 来源「${adapter.name}」首次拉取失败（${reason}），重试一次…`);
+    log(`⚠ 来源「${adapter.name}」首次拉取失败（${reason}），${RETRY_BACKOFF_MS}ms 后重试一次…`);
+    await sleep(RETRY_BACKOFF_MS);
     return await withTimeout(adapter.fetchSamples(dateKey), FETCH_TIMEOUT_MS, adapter.name);
   }
 }
@@ -283,10 +306,27 @@ async function main(): Promise<void> {
   });
   log(`原始样本合计 ${rawSamples.length} 条`);
 
-  /* ---- 2. 单位归一与一致性校验 ---- */
+  /* ---- 2. 单位归一与一致性校验（单均价源跳过归一，保留原始单位） ---- */
   const normalized: NormalizedSample[] = [];
   let removedInvalid = 0;
   for (const item of rawSamples) {
+    if (item.sample.singleAverage === true) {
+      // 单均价源（如官方集超均价）：单位可能是「元/盒(250ml)」等不在换算表内的形式，
+      // 不做单位归一，保留原始单位与原始价格，聚合阶段按均价直接展开区间。
+      // 拒绝非法与非正价格：0 元是官方缺报占位的常见形态，不得产出全 0 区间记录
+      if (!Number.isFinite(item.sample.priceYuan) || item.sample.priceYuan <= 0) {
+        removedInvalid += 1;
+        console.warn(
+          `${LOG_PREFIX} ⚠ 剔除单均价样本：「${item.sample.productName}」（${item.sample.category}）priceYuan=${item.sample.priceYuan}，非法或为 0 元缺报占位`
+        );
+        continue;
+      }
+      item.dimension = 'mass';
+      item.factor = 1;
+      item.perBase = item.sample.priceYuan;
+      normalized.push(item);
+      continue;
+    }
     const info = parseUnit(item.sample.unit);
     if (info === null || !Number.isFinite(item.sample.priceYuan)) {
       removedInvalid += 1;
@@ -299,9 +339,13 @@ async function main(): Promise<void> {
   }
   log(`单位归一完成：有效 ${normalized.length} 条，剔除单位/数值非法 ${removedInvalid} 条`);
 
-  /* ---- 3. 异常清理：按品类分组，剔除负值与 IQR 栅栏外样本 ---- */
+  /* 单均价样本与常规多样本分流：单点无分布意义，不参与 IQR 剔除与分位数聚合 */
+  const regularNormalized = normalized.filter((i) => i.sample.singleAverage !== true);
+  const singleAvgNormalized = normalized.filter((i) => i.sample.singleAverage === true);
+
+  /* ---- 3. 异常清理：按品类分组，剔除负值与 IQR 栅栏外样本（仅常规多样本） ---- */
   const byCategory = new Map<string, NormalizedSample[]>();
-  for (const item of normalized) {
+  for (const item of regularNormalized) {
     const list = byCategory.get(item.sample.category) ?? [];
     list.push(item);
     byCategory.set(item.sample.category, list);
@@ -403,6 +447,64 @@ async function main(): Promise<void> {
     });
   }
   log(`聚合完成：${groupMap.size} 个 城市+渠道+品类 分组 → ${records.length} 条零售样本记录`);
+
+  /* ---- 4b. 单均价源展开：官方单均价每商品每期仅 1 个样本，不适用分位数聚合 ---- */
+  let singleAvgCount = 0;
+  {
+    // 按 城市+渠道+品类+商品 分组（比常规聚合多一层商品维度）
+    const singleGroups = new Map<string, NormalizedSample[]>();
+    for (const item of singleAvgNormalized) {
+      const s = item.sample;
+      const key = `${s.cityCode}|${s.channel}|${s.category}|${s.productName}`;
+      const list = singleGroups.get(key);
+      if (list) {
+        list.push(item);
+      } else {
+        singleGroups.set(key, [item]);
+      }
+    }
+    for (const items of singleGroups.values()) {
+      if (items.length > 1) {
+        log(`⚠ 单均价商品「${items[0].sample.productName}」出现 ${items.length} 条样本，取优先级最高来源展开`);
+      }
+      const bestPriority = Math.min(...items.map((i) => i.priority));
+      const best = items.find((i) => i.priority === bestPriority) as NormalizedSample;
+      const s = best.sample;
+      const avg = s.priceYuan;
+      const unitNotePart = s.unitNote ? `；${s.unitNote}` : '';
+      // 固定系数展开，保持 low≤p25≤median≤p75≤p90≤high 有序
+      // 记录唯一 ID：adapterId-品类-商品名-日期（含品类，避免跨品类同名商品撞车）
+      records.push({
+        id: `${best.adapterId}-${s.category}-${s.productName}-${s.dataDate}`,
+        cityCode: s.cityCode,
+        cityName: s.cityName,
+        channel: s.channel as Channel,
+        category: s.category,
+        productName: s.productName,
+        specification: s.specification,
+        unit: s.unit,
+        low: round2(avg * 0.9),
+        median: round2(avg),
+        high: round2(avg * 1.25),
+        p25: round2(avg * 0.97),
+        p75: round2(avg * 1.08),
+        p90: round2(avg * 1.2),
+        sampleCount: 1,
+        dataDate: s.dataDate,
+        sourceName: s.sourceName || best.adapterName,
+        sourceUrl: s.sourceUrl ?? '',
+        dataLevel: 'official_retail',
+        confidence: 'medium',
+        expandedFromSingleAverage: true,
+        note: `官方集超均价展开区间（均价×0.9~×1.25），非实测分布${unitNotePart}`
+        // trend7d 省略：单均价无逐日走势，前端需兼容缺失趋势数据
+      });
+      singleAvgCount += 1;
+    }
+    if (singleAvgCount > 0) {
+      log(`单均价展开：新增 ${singleAvgCount} 条单均价展开记录（sampleCount=1，confidence=medium）`);
+    }
+  }
 
   /* ---- 5. 批发样本折算零售估算（无本地零售样本时） ---- */
   const hasRetail = new Set<string>();
@@ -511,12 +613,14 @@ async function main(): Promise<void> {
   writeFileAtomic(path.join(DIST_DIR, 'sources.json'), JSON.stringify(sourcesDoc, null, 2));
   log('✓ 已写入 dist/sources.json（每条记录的来源与采集时间）');
 
-  // 缺失品类统计：每个城市 × 9 个规范品类是否被覆盖
+  // 缺失品类统计：每个城市 × 9 个规范品类是否被覆盖。
+  // 城市集合从最终 records 收集（而非仅常规聚合 groupMap），
+  // 否则全走单均价分支的城市（如福州）会被遗漏。
   const covered = new Set(records.map((r) => `${r.cityCode}|${r.category}`));
-  const cityCodes = Array.from(new Set([...groupMap.values()].map((g) => g.cityCode)));
+  const cityCodes = Array.from(new Set(records.map((r) => r.cityCode)));
   const missingCategories: string[] = [];
   for (const cityCode of cityCodes) {
-    const cityName = [...groupMap.values()].find((g) => g.cityCode === cityCode)?.cityName ?? cityCode;
+    const cityName = records.find((r) => r.cityCode === cityCode)?.cityName ?? cityCode;
     for (const category of CANONICAL_CATEGORIES) {
       if (!covered.has(`${cityCode}|${category}`)) {
         missingCategories.push(`${cityName}/${category}`);
@@ -524,11 +628,17 @@ async function main(): Promise<void> {
     }
   }
 
+  // 报告口径说明：
+  // - totalSamplesRaw 含全部来源的原始样本（含单均价样本）；
+  // - totalSamplesClean 仅统计通过单位归一的常规样本（与 removedInvalid/removedOutliers
+  //   同口径，不含单均价样本）；单均价样本数单独记入 singleAverageSampleCount，
+  //   故恒等关系为 totalSamplesRaw = totalSamplesClean + singleAverageSampleCount + 其余剔除。
   const qualityReport = {
     generatedAt,
     durationMs: Date.now() - startTs,
     totalSamplesRaw: rawSamples.length,
     totalSamplesClean: cleaned.length,
+    singleAverageSampleCount: singleAvgNormalized.length,
     samplesPerSource,
     removedInvalid,
     removedOutliers,
@@ -536,6 +646,7 @@ async function main(): Promise<void> {
     failedAdapters,
     recordCount: records.length,
     estimatedRecordCount: estimatedCount,
+    singleAverageRecordCount: singleAvgCount,
     missingCategories
   };
   writeFileAtomic(path.join(DIST_DIR, 'data-quality-report.json'), JSON.stringify(qualityReport, null, 2));

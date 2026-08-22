@@ -68,12 +68,18 @@ interface DetailView {
 function toView(r: PriceRecord): DetailView {
   const isWholesale = r.dataLevel === 'wholesale';
   const trend = Array.isArray(r.trend7d) ? r.trend7d.filter((v) => Number.isFinite(v)) : [];
+  // 官方单均价展开记录：显式标记优先（expandedFromSingleAverage===true），
+  // 缺失该字段的旧数据回退原逻辑（sampleCount===1）
+  const isExpandedSingleAverage = r.expandedFromSingleAverage === true || r.sampleCount === 1;
+  const priceCaliber = isExpandedSingleAverage
+    ? `计价口径：${r.unit}，参考区间由官方单日均价按固定系数展开，详见下方备注。`
+    : `计价口径：${r.unit}，参考区间按近 7 日样本由低到高整理。`;
   return {
     productName: r.productName,
     category: r.category,
     specification: r.specification,
     unit: r.unit,
-    priceCaliber: `计价口径：${r.unit}，参考区间按近 7 日样本由低到高整理。`,
+    priceCaliber,
     low: fmtNum(r.low),
     median: fmtNum(r.median),
     high: fmtNum(r.high),

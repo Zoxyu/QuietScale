@@ -56,8 +56,9 @@ project.5/
 ├── scripts/                          # Node 工具（不进小程序编译）
 │   ├── generate-prices.ts            # 数据生成主管线（node 直接运行）
 │   └── adapters/
-│       ├── adapter.ts                # PriceAdapter 接口与注册表
+│       ├── adapter.ts                # PriceAdapter 接口与注册表（RawSample 含 unitNote/singleAverage 可选字段）
 │       ├── mock-adapter.ts           # 人工季节基准 Mock 适配器（固定种子可复现）
+│       ├── fuzhou-fgw.ts             # 福州市发改委「主副食品集超均价表」（官方源，已验证接入）
 │       └── official-placeholder.ts   # 官方数据源占位（pending-auth）
 ├── tests/                            # 单元测试（node --test 直跑）
 │   ├── money.test.ts
@@ -91,7 +92,7 @@ project.5/
 | --- | --- |
 | `USE_MOCK: true` | 读取 `mock/prices.json` 本地参考价（当前默认） |
 | `USE_MOCK: false` | 从 `REMOTE_PRICES_URL` 拉取远端 `prices.json` |
-| `REMOTE_PRICES_URL` | 远端数据地址占位；替换为真实 HTTPS 地址后需在微信公众平台配置 request 合法域名 |
+| `REMOTE_PRICES_URL` | 远端数据地址（GitHub Pages 等，接入步骤见「真实数据源接入（福州示例）」）；替换为真实 HTTPS 地址后需在微信公众平台配置 request 合法域名 |
 | `FETCH_TIMEOUT_MS` | 远端拉取超时（默认 8000ms），超时自动降级到缓存/本地 |
 
 ## 运行测试
@@ -116,13 +117,13 @@ node --test tests/
 
 | 优先级 | 来源 | 状态 |
 | --- | --- | --- |
-| 1 | 当地发改委 / 商务局 / 农业农村局零售参考 | 待授权（pending-auth） |
+| 1 | 当地发改委 / 商务局 / 农业农村局零售参考 | **福州已接入（active）**，其余城市待接入 |
 | 2 | 商务部市场监测公开数据 | 待授权 |
 | 3 | 农业农村部 / 批发市场行情 | 待授权 |
 | 4 | 授权商超 / 电商平台 | 待授权 |
-| 5 | 人工维护季节基准（Mock，当前唯一 active 来源） | active |
+| 5 | 人工维护季节基准（Mock） | active |
 
-当前阶段仅优先级 5 的 Mock 适配器产出数据；1~4 为占位适配器，确认使用许可后再接入，**绝不绕过任何反爬或验证码**。
+福州发改委（优先级 1）已验证接入，与 Mock 适配器同为 active 来源；2~4 仍为占位适配器，确认使用许可后再接入，**绝不绕过任何反爬或验证码**。接入与配置全流程见下文「真实数据源接入（福州示例）」。
 
 ### prices.json 结构（PricesFile）
 
@@ -153,8 +154,8 @@ node --test tests/
 
 ### 每日拉取与降级策略
 
-- GitHub Actions 每日（UTC 22:00 ≈ 北京时间次日 06:00）运行 `node scripts/generate-prices.ts`，产物写入 `dist/` 并提交；
-- 单个适配器超时 8s + 1 次重试，`Promise.allSettled` 并行拉取，单源失败不影响整体；
+- GitHub Actions 每日北京时间 12:30（UTC 04:30）运行 `node scripts/generate-prices.ts`，产物写入 `dist/` 并提交（选在该时间点是因为福州发改委等官方源约上午 10:00-11:30 发布当日价格表）；
+- 单个适配器总超时预算 20s + 1 次重试（重试前礼貌间隔 1.5s；各 Adapter 内部已有单请求 8s 上限），`Promise.allSettled` 并行拉取，单源失败不影响整体；
 - 样本按品类做 IQR 异常清理（剔除负值与超出 Q1−1.5×IQR / Q3+1.5×IQR 的价格）；
 - **容错**：全部来源失败或结果为空时，**不覆盖已有产物**——若 `dist/prices.json` 存在，置 `stale=true` 并在 note 标注「本次更新失败，展示最近有效参考」后写回；若不存在则以退出码 1 报错；
 - 文件写入均为原子方式（先写 `.tmp` 再 rename），脚本不做任何删除操作。
@@ -171,7 +172,7 @@ node --test tests/
 
 ### 置信度规则
 
-- `high`：当地官方零售参考（优先级 1）；
+- `high`：当地官方零售参考（优先级 1）（例外：官方单均价展开记录固定为 medium，见「真实数据源接入」）；
 - `medium`：商务部监测 / 批发市场 / 授权商超电商（优先级 2~4）；
 - `low`：人工季节基准（优先级 5）与批发折算估算值。
 
@@ -179,12 +180,12 @@ node --test tests/
 
 ---
 
-## 新增城市步骤
+## 新增城市步骤（Mock 基线）
 
-1. `types/models.ts`：在 `CITY_KEYS`（城市键集合）中加入新城市；
-2. `mock/prices.json`：补充该城市的 PriceRecord 条目；
-3. `mock/markups.json`：补充该城市各渠道 × 品类的加价系数（可先复制 default 再微调）；
-4. `scripts/adapters/mock-adapter.ts`：在城市系数表中加入该城市的基准价系数（如 1.05）。
+1. `types/models.ts`：在 `CityKey` / `CITY_NAMES` / `CITY_KEYS` 中加入新城市；
+2. `pages/market-guide/index.ts`：`CITY_CODE` 映射补充该城市的行政区划码；
+3. 若只需本地基线：`mock/prices.ts`、`mock/markups.json`、`scripts/adapters/mock-adapter.ts` 分别补充记录、加价系数与基准价系数；
+4. 若要接真实数据源：按下方「真实数据源接入（福州示例）」实现该城市的 Adapter。前端参考价列表已改为数据驱动按品类分组展示，新城市数据接入后无需改动前端。
 
 ## 新增品类步骤
 
@@ -193,14 +194,57 @@ node --test tests/
 3. `scripts/adapters/mock-adapter.ts`：在品类基准价表中加入基准价、主渠道与季节系数；
 4. 如页面有品类枚举/文案映射（category-chips、seasonal-radar 等），同步补充。
 
-## 接入真实数据源步骤
+## 真实数据源接入（福州示例）
 
-1. 确认该数据源的**使用许可**（公开协议 / 授权函），绝不绕过反爬或验证码；
-2. 在 `scripts/adapters/` 新建适配器文件，实现 `PriceAdapter` 接口（`id/name/priority/status/fetchSamples`），`fetchSamples(dateKey)` 返回 `RawSample[]`；
-3. 文件末尾调用 `registerAdapter(yourAdapter)` 注册；
-4. 在 `scripts/generate-prices.ts` 顶部 import 该适配器文件；
-5. CI（GitHub Actions）每日自动拉取、清洗、聚合并提交 `dist/`，无需改动小程序端；
-6. 验证 `dist/data-quality-report.json` 中该源的样本数与剔除情况。
+福州市发改委「主副食品集超均价表」是本项目第一个已验证的真实官方数据源（优先级 1，`scripts/adapters/fuzhou-fgw.ts`）。以下为从代码到小程序上线的完整配置步骤。
+
+### 1. 数据链路
+
+```
+GitHub Actions（每日北京时间 12:30）
+  → 福州发改委 Adapter：列表页（正则提取带日期链接，取 ≤ 当日最新一期）→ 详情页（静态 HTML 表格解析 47 行）
+  → 管线归一/清理/聚合（单均价按 ×0.9~×1.25 展开）
+  → dist/prices.json / sources.json / data-quality-report.json（自动提交入库）
+  → GitHub Pages（或 OSS/CDN）静态托管，对外提供 HTTPS 地址
+  → 小程序：每日最多拉一次，内存缓存 + storage 标记，失败自动降级到缓存/本地基线
+```
+
+### 2. GitHub 侧配置步骤（手工操作清单）
+
+以下操作均在浏览器中的 GitHub 网页上完成，首次配置按顺序执行：
+
+1. **创建仓库并推送代码**：登录 [github.com](https://github.com)，右上角 **+** → **New repository**，创建仓库（可私有可公开）；本地执行 `git remote add origin https://github.com/{用户名}/{仓库名}.git`，然后 `git add .`、`git commit`、`git push -u origin main`。
+2. **开启 Actions 写入权限**（必须，否则定时任务无法把 `dist/` 提交回仓库）：仓库页 → **Settings** → 左侧 **Actions** → **General** → 滚动到 **Workflow permissions** → 勾选 **Read and write permissions** → 页面底部 **Save**。
+3. **开启 GitHub Pages 静态托管**：仓库页 → **Settings** → 左侧 **Pages** → **Build and deployment** 下 **Source** 选择 **Deploy from a branch** → Branch 选择 `main`（目录选 `/`（root）或 `/docs`，确保能访问到 `dist/` 所在路径）→ **Save**。等待几分钟后，数据文件地址形如：`https://{用户名}.github.io/{仓库名}/dist/prices.json`（浏览器打开能看到 JSON 即配置成功）。若使用 OSS/CDN，则自行将 `dist/prices.json` 上传到可公开访问的 HTTPS 地址。
+4. **手动触发一次工作流验证**：仓库页 → **Actions** 选项卡 → 左侧选择 **Daily price data generation** → 右侧 **Run workflow** → 选分支后点击绿色按钮。进入运行记录查看日志，确认出现「来源『福州市发改委主副食品集超均价』拉取成功：47 条样本」与「单均价展开：新增 47 条」；再回仓库查看 `dist/` 目录是否由 `github-actions[bot]` 提交了新文件，`dist/data-quality-report.json` 中 `singleAverageRecordCount` 应为 47。
+5. **验证通过后再配置小程序端**：完成下面第 3、4 小节的域名白名单与应用配置切换。
+
+### 3. 微信公众平台域名白名单
+
+微信公众平台 → **开发** → **开发管理** → **开发设置** → **服务器域名** → `request 合法域名` 中添加托管域名（如 `https://{用户名}.github.io`）。未配置时真机与体验版无法请求该地址。
+
+### 4. 小程序端切换真实数据
+
+`config/app.config.ts`：
+
+1. `USE_MOCK` 置为 `false`；
+2. `REMOTE_PRICES_URL` 填第 2 步得到的托管地址（必须 HTTPS，如 `https://{用户名}.github.io/{仓库名}/dist/prices.json`）；
+3. 开发者工具调试期可在「详情 → 本地设置」勾选 **不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书**，跳过域名校验；真机预览/上线必须已完成第 3 节白名单配置。
+
+### 5. 数据机制说明
+
+- **周末/节假日自动沿用最近一期**：官方约工作日上午 10:00-11:30 发布，周末与节假日不发布；Adapter 取列表页中「日期 ≤ 当日」的最新一期，页面展示对应数据日期，不会产生断档；
+- **单均价展开为区间**：官方每期每商品只有 1 个均价，管线按 `均价×0.9（low）/ ×0.97（p25）/ ×1.0（median）/ ×1.08（p75）/ ×1.2（p90）/ ×1.25（high）` 展开，`sampleCount=1`、`confidence=medium`，note 标注「官方集超均价展开区间（均价×0.9~×1.25），非实测分布」+ 单位说明（如元/500克即元/斤）；「我看到的价格」对这类记录一律按「数据不足，暂不判断」处理，并引导对照参考区间自行比较；
+- **失败保留旧数据**：全部数据源失败或样本为空时，不覆盖已有 `dist/prices.json`，仅置 `stale=true` 标注「本次更新失败，展示最近有效参考」；
+- **礼貌抓取**：可识别 User-Agent（`QuietScale-DataBot/0.2`）、请求间隔 ≥1 秒、单次请求 8 秒超时、失败最多重试 1 次，不绕过任何限制。
+
+### 6. 新增其他城市/数据源的通用步骤（以福州为模板）
+
+1. **找列表页**：在当地发改委/商务局官网找公开发布的价格栏目，要求：静态列表页（时间倒序、链接含日期）+ 静态详情页（表格），并确认允许公开引用；
+2. **实现 Adapter**：在 `scripts/adapters/` 新建文件实现 `PriceAdapter`（`id/name/priority/status/fetchSamples`），`fetchSamples(dateKey)` 返回 `RawSample[]`；单位特殊（如元/盒）或单均价源，在样本上带 `unitNote` / `singleAverage: true` 标记；礼貌抓取参数与 `fuzhou-fgw.ts` 保持一致；
+3. **注册与引入**：文件末尾调用 `registerAdapter(yourAdapter)`，并在 `scripts/generate-prices.ts` 顶部 import 该文件；
+4. **前端登记城市**：`types/models.ts` 的 `CityKey/CITY_NAMES/CITY_KEYS` 与 `pages/market-guide/index.ts` 的 `CITY_CODE` 加入新城市（参考价列表已数据驱动，按品类自动分组，无需改前端）；
+5. **验证**：GitHub Actions 手动触发一次，检查 `dist/data-quality-report.json` 中该源样本数与剔除情况。
 
 ---
 
@@ -214,6 +258,6 @@ node --test tests/
 ## GitHub Actions 说明
 
 - 工作流：`.github/workflows/generate-prices.yml`（Daily price data generation）；
-- 触发：`schedule: cron '0 22 * * *'`（UTC，即北京时间次日 06:00）+ `workflow_dispatch` 手动触发；
+- 触发：`schedule: cron '30 4 * * *'`（UTC，即北京时间 12:30；福州发改委约上午 10:00-11:30 发布，中午抓取确保拿到当日数据）+ `workflow_dispatch` 手动触发；
 - 流程：checkout → setup-node（Node 24）→ `node scripts/generate-prices.ts` → 若 `dist/` 有变更，以 `github-actions[bot]` 身份仅提交 `dist/` 目录并 push；无变更则跳过提交；
 - 该流程只生成与提交**公共参考价数据**，不保存任何用户数据。

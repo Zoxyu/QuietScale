@@ -127,6 +127,9 @@ function insufficient(basis: string, isWholesale: boolean): JudgeResult {
  *
  * 规则：
  * - record 为 null / sampleCount<8 / dataDate 距今超 14 天 → insufficient-data；
+ *   其中官方单均价展开记录（expandedFromSingleAverage===true；
+ *   旧数据缺失该字段时回退 sampleCount===1 判别）使用专门的中性文案，
+ *   引导对照参考价区间自行比较，不做分位判断；
  * - <= p25 → low-price；<= p75 → fair；<= p90 → slightly-high；> p90 → too-high；
  * - 用户单位与记录单位口径不同 → 依据文本追加口径差异提示（同义单位如 斤↔500g、
  *   公斤↔kg、升↔L、毫升↔ml 归一后比较，不提示差异）；
@@ -160,8 +163,17 @@ export function judgeObservedPrice(input: JudgeInput): JudgeResult {
     );
   }
 
-  // 样本量检查：<8 → 数据不足
+  // 样本量检查：<8 → 数据不足；官方单均价展开记录用专门的中性文案，
+  // 说明不做分位判断的原因，并引导对照参考区间自行比较（不输出恐慌性表述）。
+  // 显式标记优先：expandedFromSingleAverage===true 才走单均价分支；
+  // 缺失该字段的旧数据回退原逻辑（sampleCount===1）。
   if (record.sampleCount < MIN_SAMPLE_COUNT) {
+    if (record.expandedFromSingleAverage === true || record.sampleCount === 1) {
+      return insufficient(
+        `该商品仅有官方单日均价参考（${record.dataDate} 发布），暂不做分位判断，可对照参考价区间（${fmt1(record.low)}–${fmt1(record.high)} ${record.unit}）自行比较。`,
+        isWholesale
+      );
+    }
     return insufficient(
       `本地参考样本量较少（${record.sampleCount} 条，低于 ${MIN_SAMPLE_COUNT} 条），代表性有限，数据不足，暂不判断。`,
       isWholesale

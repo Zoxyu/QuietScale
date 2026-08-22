@@ -29,13 +29,10 @@
       <view class="caliber-line">{{rec.priceCaliber}}</view>
     </view>
 
-    <!-- 近 7 日趋势 -->
-    <view class="card block fade-in-up">
+    <!-- 近 7 日趋势：无逐日走势数据（如单均价展开记录）时整块隐藏 -->
+    <view wx:if="{{rec.hasTrend}}" class="card block fade-in-up">
       <view class="block-title">近 7 日走势</view>
-      <block wx:if="{{rec.hasTrend}}">
-        <trend-chart values="{{rec.trend7d}}" unit="{{rec.unit}}" />
-      </block>
-      <view wx:else class="block-empty">这条记录暂无逐日走势数据。</view>
+      <trend-chart values="{{rec.trend7d}}" unit="{{rec.unit}}" />
     </view>
 
     <!-- 参考价三档 + 样本量 -->
