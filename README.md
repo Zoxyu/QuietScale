@@ -1,5 +1,7 @@
 # 一秤清欢（QuietScale）
 
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 > 买菜之前，先算清楚。
 
 「一秤清欢」是一个**原生微信小程序**（TypeScript，无第三方 npm 依赖），帮你把菜市场的价格算明白：
@@ -261,3 +263,14 @@ GitHub Actions（每日北京时间 12:30）
 - 触发：`schedule: cron '30 4 * * *'`（UTC，即北京时间 12:30；福州发改委约上午 10:00-11:30 发布，中午抓取确保拿到当日数据）+ `workflow_dispatch` 手动触发；
 - 流程：checkout → setup-node（Node 24）→ `node scripts/generate-prices.ts` → 若 `dist/` 有变更，以 `github-actions[bot]` 身份仅提交 `dist/` 目录并 push；无变更则跳过提交；
 - 该流程只生成与提交**公共参考价数据**，不保存任何用户数据。
+
+---
+
+## 许可证
+
+本项目采用 [CC BY-NC-SA 4.0（署名-非商业性使用-相同方式共享 4.0 国际）](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可证。
+
+- ✅ **允许**：学习、参考、修改，以及非商业目的的使用与分享；
+- ✅ **要求**：再分发或衍生作品须署名、附本许可证链接并说明修改；衍生作品须以相同协议分享；
+- ❌ **禁止**：任何商业目的使用——包括但不限于上架为收费 / 含广告收入的小程序或应用、作为付费产品或课程出售、商业运营与转售。
+- 💼 **商用授权**：如需商业使用，请联系作者获取书面授权（联系方式见 [LICENSE](./LICENSE)）。
