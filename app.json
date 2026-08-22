@@ -32,5 +32,13 @@
     ]
   },
   "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息仅用于匹配所在城市展示本地参考价，不会上传或保存"
+    }
+  },
   "sitemapLocation": "sitemap.json"
 }

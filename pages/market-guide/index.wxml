@@ -15,35 +15,50 @@
     <view wx:if="{{gradeLabel}}" class="grade-badge">{{gradeLabel}}</view>
   </view>
 
-  <!-- A. 城市与渠道 -->
+  <!-- A. 城市（省市两级 + 定位）与渠道 -->
   <view class="card selector-card fade-in-up">
     <view class="selector-block">
-      <view class="selector-label">城市</view>
-      <scroll-view class="chip-scroll" scroll-x enhanced show-scrollbar="{{false}}">
-        <view class="chip-track">
-          <view
-            wx:for="{{cityOptions}}"
-            wx:key="key"
-            class="chip {{cityKey === item.key ? 'chip-active' : ''}}"
-            data-key="{{item.key}}"
-            bind:tap="onCityTap"
-          >{{item.name}}</view>
+      <view class="selector-label-row">
+        <text class="selector-label">城市</text>
+        <view class="locate-btn" hover-class="locate-hover" hover-stay-time="80" bindtap="onRelocate">
+          <text>{{locating ? '定位中…' : '重新定位'}}</text>
         </view>
-      </scroll-view>
+      </view>
+      <view class="region-row">
+        <picker
+          class="region-picker"
+          mode="selector"
+          range="{{provinces}}"
+          range-key="name"
+          value="{{provinceIndex}}"
+          bindchange="onProvinceChange"
+        >
+          <view class="region-field">{{provinces[provinceIndex].name}}<text class="region-arrow">⌄</text></view>
+        </picker>
+        <picker
+          class="region-picker"
+          mode="selector"
+          range="{{cities}}"
+          range-key="name"
+          value="{{cityIndex}}"
+          bindchange="onCityChange"
+        >
+          <view class="region-field">{{cities[cityIndex].name}}<text class="region-arrow">⌄</text></view>
+        </picker>
+      </view>
+      <view wx:if="{{locationHint}}" class="location-hint">{{locationHint}}</view>
     </view>
     <view class="selector-block">
       <view class="selector-label">渠道</view>
-      <scroll-view class="chip-scroll" scroll-x enhanced show-scrollbar="{{false}}">
-        <view class="chip-track">
-          <view
-            wx:for="{{channelOptions}}"
-            wx:key="key"
-            class="chip {{channel === item.key ? 'chip-active' : ''}}"
-            data-key="{{item.key}}"
-            bind:tap="onChannelTap"
-          >{{item.name}}</view>
-        </view>
-      </scroll-view>
+      <view class="channel-track">
+        <view
+          wx:for="{{channelOptions}}"
+          wx:key="key"
+          class="chip {{channel === item.key ? 'chip-active' : ''}}"
+          data-key="{{item.key}}"
+          bind:tap="onChannelTap"
+        >{{item.name}}</view>
+      </view>
     </view>
   </view>
 
@@ -57,7 +72,7 @@
     <view wx:if="{{filterNote}}" class="filter-note">{{filterNote}}</view>
 
     <view wx:if="{{loading}}" class="empty-card card">正在为你整理参考价…</view>
-    <view wx:elif="{{!groups.length}}" class="empty-card card">暂无参考数据，换个城市或渠道试试。</view>
+    <view wx:elif="{{!groups.length}}" class="empty-card card">该城市暂未接入参考数据，换个城市或渠道试试。</view>
     <block wx:else>
       <!-- 数据驱动：按品类分组展示（组内按品名排序；key 为「品类名+组序号」的稳定唯一键） -->
       <view wx:for="{{groups}}" wx:for-item="group" wx:key="key" class="category-group">

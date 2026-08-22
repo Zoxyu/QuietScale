@@ -269,18 +269,4 @@ export interface MarkupTable {
 /** 数据等级：远端兜底 / 本地基线 */
 export type DataGrade = 'remote' | 'local_baseline';
 
-/** 城市键：全国兜底 + 示例城市 */
-export type CityKey = 'national' | 'beijing' | 'shanghai' | 'guangzhou' | 'chengdu' | 'fuzhou';
-
-/** 城市键 → 中文名映射 */
-export const CITY_NAMES: Record<CityKey, string> = {
-  national: '全国',
-  beijing: '北京',
-  shanghai: '上海',
-  guangzhou: '广州',
-  chengdu: '成都',
-  fuzhou: '福州'
-};
-
-/** 城市键列表（供选择器遍历，保持展示顺序） */
-export const CITY_KEYS: CityKey[] = ['national', 'beijing', 'shanghai', 'guangzhou', 'chengdu', 'fuzhou'];
+/** 城市配置（省市两级 + 定位坐标）已迁移至 config/regions.ts */

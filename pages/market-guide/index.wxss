@@ -83,13 +83,78 @@
   margin-bottom: 6rpx;
 }
 
-.chip-scroll {
-  width: 100%;
-  white-space: nowrap;
+/* 标签行：左侧标签 + 右侧定位按钮 */
+.selector-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6rpx;
 }
 
-.chip-track {
+/* 重新定位按钮：胶囊描边，墨绿文字暗示可点 */
+.locate-btn {
   display: inline-flex;
+  align-items: center;
+  padding: 8rpx 24rpx;
+  border-radius: var(--radius-pill);
+  border: 2rpx solid var(--color-border);
+  background-color: var(--color-bg);
+  font-size: 23rpx;
+  color: var(--color-ink);
+  transition: all 180ms ease;
+}
+
+.locate-hover {
+  background-color: var(--color-win-bg);
+}
+
+/* 省市两级选择器：等宽双列，长城市名省略不撑破 */
+.region-row {
+  display: flex;
+}
+
+.region-picker {
+  flex: 1;
+  min-width: 0;
+}
+
+.region-picker + .region-picker {
+  margin-left: var(--space-sm);
+}
+
+.region-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 84rpx;
+  padding: 0 26rpx;
+  border-radius: 16rpx;
+  background-color: var(--color-bg);
+  border: 2rpx solid var(--color-border);
+  font-size: 28rpx;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.region-arrow {
+  margin-left: 8rpx;
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+/* 定位结果提示 */
+.location-hint {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+}
+
+/* 渠道 chips：自动换行（不再横滑） */
+.channel-track {
+  display: flex;
+  flex-wrap: wrap;
   padding: 6rpx 2rpx;
 }
 
@@ -97,10 +162,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* 点击热区 ≥ 88rpx：flex 居中文本保持胶囊观感，横滑容器随内容自适应高度 */
+  /* 点击热区 ≥ 88rpx；换行间距由 channel-track 控制 */
   min-height: 88rpx;
   padding: 0 28rpx;
-  margin-right: var(--space-sm);
+  margin: 0 var(--space-sm) var(--space-sm) 0;
   border-radius: var(--radius-pill);
   background-color: var(--color-bg);
   border: 2rpx solid var(--color-border);

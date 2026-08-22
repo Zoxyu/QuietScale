@@ -1,13 +1,16 @@
 /**
  * pages/market-guide/index.ts —— 「菜场指南」（TabBar 页）
  *
- * 职责：纯胶水层。负责城市 / 渠道过滤、参考价列表组装、价格判断与静态内容装载。
+ * 职责：纯胶水层。负责城市（定位 + 手动选择）/ 渠道过滤、参考价列表组装、
+ * 价格判断与静态内容装载。
  *
  * 数据流：
  * 1. onLoad → getPriceDataset() 取全量 records 与数据等级 grade；
- * 2. 城市 / 渠道只存页面 data（内存态），严禁写 storage；
+ * 2. 城市选择 = 定位 + 手动两种方式：首次进入自动定位；用户手动选择后
+ *    优先用户选择（不再自动定位），点「重新定位」可再次跟随定位；
+ *    城市 / 渠道只存页面 data（内存态），严禁写 storage；
  * 3. applyFilter() 按「所选城市 + 所选渠道」过滤；无该渠道记录时放宽到
- *    该城市任意渠道并标注；城市整体无记录时回退全国参考；
+ *    该城市任意渠道并标注；城市无记录时展示空态（已移除全国参考的兜底回退）；
  *    过滤结果数据驱动按 category 分组（组内按品名排序），不硬编码品类；
  * 4. 「我看到的价格」经 200ms 防抖调用 judgeObservedPrice，结果按五档映射视觉。
  */
@@ -17,9 +20,9 @@ import { judgeObservedPrice } from '../../services/judge';
 import { splitSeasonalList, getSeasonalTip } from '../../services/seasonal';
 import { SEASONAL_BASELINES } from '../../mock/seasonal-baselines';
 import type { SeasonalBaselineItem } from '../../services/seasonal';
-import { CITY_KEYS, CITY_NAMES } from '../../types/models';
+import { ACTIVE_PROVINCES, CITY_COORDS } from '../../config/regions';
+import type { CityConfig } from '../../config/regions';
 import type {
-  CityKey,
   Channel,
   PriceRecord,
   PricesFile,
@@ -39,21 +42,8 @@ const SEASONAL_FILE = SEASONAL_BASELINES;
 /** 判断输入防抖间隔（毫秒） */
 const JUDGE_DEBOUNCE_MS = 200;
 
-/** CityKey → 后端 cityCode 映射（全国为字符串，城市为行政区划码） */
-const CITY_CODE: Record<CityKey, string> = {
-  national: 'national',
-  beijing: '110000',
-  shanghai: '310000',
-  guangzhou: '440100',
-  chengdu: '510100',
-  fuzhou: '350100'
-};
-
-/** 城市选择项（全国展示为「全国参考」） */
-const CITY_OPTIONS = CITY_KEYS.map((key) => ({
-  key,
-  name: key === 'national' ? '全国参考' : CITY_NAMES[key]
-}));
+/** 定位匹配半径（km）：距最近有数据城市超过该距离视为「当前城市未接入」 */
+const LOCATE_MATCH_RADIUS_KM = 150;
 
 /** 渠道选择项（默认菜市场） */
 const CHANNEL_OPTIONS: Array<{ key: Channel; name: string }> = [
@@ -276,7 +266,7 @@ function toItem(r: PriceRecord): PriceItemView {
 
 /**
  * 按城市 + 渠道过滤，逐级放宽：
- * 精确匹配 → 该城市任意渠道（标注）→ 全国参考兜底。
+ * 精确匹配 → 该城市任意渠道（标注）→ 空列表（空态由 wxml 展示）。
  */
 function filterRecords(
   all: PriceRecord[],
@@ -296,8 +286,41 @@ function filterRecords(
       note: `${cityName}暂无「${channelName}」渠道的参考记录，已放宽为该城市全部渠道。`
     };
   }
-  const national = all.filter((r) => r.cityCode === 'national');
-  return { list: national, note: `${cityName}暂无参考记录，已切换为全国参考。` };
+  return { list: [], note: '' };
+}
+
+/** 两点经纬度近似距离（km）：等距圆柱投影近似，城市尺度足够精确 */
+function distanceKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const rad = Math.PI / 180;
+  const x = (lng2 - lng1) * rad * Math.cos(((lat1 + lat2) / 2) * rad);
+  const y = (lat2 - lat1) * rad;
+  return Math.sqrt(x * x + y * y) * 6371;
+}
+
+/** 定位坐标 → 最近的已启用城市（超出匹配半径返回 null） */
+function matchCityByLocation(
+  lat: number,
+  lng: number
+): { city: CityConfig; provinceIndex: number; cityIndex: number; distance: number } | null {
+  let best: { city: CityConfig; provinceIndex: number; cityIndex: number; distance: number } | null = null;
+  for (let p = 0; p < ACTIVE_PROVINCES.length; p += 1) {
+    const province = ACTIVE_PROVINCES[p];
+    for (let c = 0; c < province.cities.length; c += 1) {
+      const city = province.cities[c];
+      const coord = CITY_COORDS[city.cityCode];
+      if (!coord) {
+        continue;
+      }
+      const distance = distanceKm(lat, lng, coord.lat, coord.lng);
+      if (!best || distance < best.distance) {
+        best = { city, provinceIndex: p, cityIndex: c, distance };
+      }
+    }
+  }
+  if (!best || best.distance > LOCATE_MATCH_RADIUS_KM) {
+    return null;
+  }
+  return best;
 }
 
 /** 时令三组 → 雷达组件结构（传全量品名，由组件按需截断/展开） */
@@ -320,10 +343,18 @@ function buildSeasonalGroups(items: SeasonalBaselineItem[], month: number): Reco
 
 Page({
   data: {
-    /* A. 城市与渠道（仅内存态） */
-    cityOptions: CITY_OPTIONS,
+    /* A. 城市（省市两级 + 定位）与渠道（仅内存态） */
+    provinces: ACTIVE_PROVINCES,
+    provinceIndex: 0,
+    cities: ACTIVE_PROVINCES.length ? ACTIVE_PROVINCES[0].cities : [],
+    cityIndex: 0,
+    /** 用户是否已手动选择城市（手动选择优先于定位） */
+    userSelected: false,
+    /** 定位中（按钮状态用） */
+    locating: false,
+    /** 定位结果提示（成功命中 / 未接入 / 失败） */
+    locationHint: '',
     channelOptions: CHANNEL_OPTIONS,
-    cityKey: 'national' as CityKey,
     channel: 'market' as Channel,
 
     /* B. 今日参考价 */
@@ -361,6 +392,8 @@ Page({
   onLoad(this: any): void {
     this.loadSeasonal();
     this.loadPrices();
+    // 首次进入自动定位（用户尚未手动选择）；定位结果仅用于匹配城市，不上传不保存
+    this.locate();
   },
 
   /** 同步自定义 tabBar 选中态（菜场指南 = 1） */
@@ -402,19 +435,21 @@ Page({
 
   /** 依据当前城市 / 渠道过滤并组装列表，同时重置判断表单 */
   applyFilter(this: any): void {
-    const cityKey = this.data.cityKey as CityKey;
+    const province = ACTIVE_PROVINCES[this.data.provinceIndex as number];
+    const city: CityConfig | null =
+      (province && province.cities[this.data.cityIndex as number]) || null;
     const channel = this.data.channel as Channel;
-    const cityCode = CITY_CODE[cityKey];
-    const cityName = cityKey === 'national' ? '全国参考' : CITY_NAMES[cityKey];
     const channelName = CHANNEL_NAME[channel] || channel;
 
-    const { list, note } = filterRecords(this._allRecords, cityCode, channel, cityName, channelName);
+    const filtered = city
+      ? filterRecords(this._allRecords, city.cityCode, channel, city.name, channelName)
+      : { list: [] as PriceRecord[], note: '' };
     // 先分桶再组内排序：同品类必然成组，不依赖「与上一条同品类」的脆弱合并
-    const { sorted, groups } = buildGroups(list);
+    const { sorted, groups } = buildGroups(filtered.list);
 
     this._filteredList = sorted;
     this.setData({
-      filterNote: note,
+      filterNote: filtered.note,
       groups,
       observedPickerRange: sorted.map((r) => r.productName),
       observedIndex: 0,
@@ -425,14 +460,89 @@ Page({
     });
   },
 
-  /** 切换城市（仅存内存） */
-  onCityTap(this: any, e: any): void {
-    const key = e.currentTarget.dataset.key as CityKey;
-    if (!key || key === this.data.cityKey) {
+  /** 切换省：城市重置为该省第一个可用城市（手动选择优先于定位） */
+  onProvinceChange(this: any, e: any): void {
+    const provinceIndex = Number(e.detail.value);
+    const province = ACTIVE_PROVINCES[provinceIndex];
+    if (!province || provinceIndex === this.data.provinceIndex) {
       return;
     }
-    this.setData({ cityKey: key });
+    this.setData({
+      provinceIndex,
+      cities: province.cities,
+      cityIndex: 0,
+      userSelected: true,
+      locationHint: ''
+    });
     this.applyFilter();
+  },
+
+  /** 切换市（手动选择优先于定位） */
+  onCityChange(this: any, e: any): void {
+    const cityIndex = Number(e.detail.value);
+    if (cityIndex === this.data.cityIndex) {
+      return;
+    }
+    this.setData({ cityIndex, userSelected: true, locationHint: '' });
+    this.applyFilter();
+  },
+
+  /** 重新定位：用户主动点击表示再次跟随定位，清除手动选择标记 */
+  onRelocate(this: any): void {
+    if (this.data.locating) {
+      return;
+    }
+    this.locate();
+  },
+
+  /**
+   * 获取定位并匹配最近的已启用城市。
+   * 隐私约束：经纬度仅在本地用于城市匹配，不上传、不写 storage、不上报。
+   */
+  locate(this: any): void {
+    this.setData({ locating: true, locationHint: '' });
+    wx.getLocation({
+      type: 'wgs84',
+      success: (res: any) => {
+        const match = matchCityByLocation(res.latitude, res.longitude);
+        if (match) {
+          this.setData({
+            locating: false,
+            userSelected: false,
+            provinceIndex: match.provinceIndex,
+            cities: ACTIVE_PROVINCES[match.provinceIndex].cities,
+            cityIndex: match.cityIndex,
+            locationHint: `已定位：${match.city.name}`
+          });
+          this.applyFilter();
+          return;
+        }
+        this.setData({
+          locating: false,
+          locationHint: '你所在的城市暂未接入参考数据，请手动选择城市'
+        });
+      },
+      fail: () => {
+        this.setData({ locating: false, locationHint: '定位失败或已拒绝授权，请手动选择城市' });
+        // 曾被拒绝授权时引导去设置页开启（仅提示，不强制）
+        wx.getSetting({
+          success: (s: any) => {
+            if (s.authSetting && s.authSetting['scope.userLocation'] === false) {
+              wx.showModal({
+                title: '需要定位权限',
+                content: '定位仅用于匹配你所在的城市，不上传不保存。请在设置中开启位置权限后，再点「重新定位」。',
+                confirmText: '去设置',
+                success: (r: any) => {
+                  if (r.confirm) {
+                    wx.openSetting();
+                  }
+                }
+              });
+            }
+          }
+        });
+      }
+    });
   },
 
   /** 切换渠道（仅存内存） */
