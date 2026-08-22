@@ -1,9 +1,9 @@
 {
   "description": "一秤清欢 QuietScale —— 菜场比价小程序项目配置",
-  "appid": "wx71a690a5d208391c",
+  "appid": "wx77b309b83e7d918d",
   "projectname": "quiet-scale",
   "compileType": "miniprogram",
-  "libVersion": "3.17.1",
+  "libVersion": "3.4.10",
   "setting": {
     "es6": true,
     "enhance": true,

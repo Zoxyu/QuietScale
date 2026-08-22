@@ -14,14 +14,14 @@ export const APP_CONFIG = {
    * 是否使用本地 mock 参考价数据。
    * true：读取 mock 数据（当前阶段）；false：从 REMOTE_PRICES_URL 拉取。
    */
-  USE_MOCK: true,
+  USE_MOCK: false,
 
   /**
    * 远程参考价数据文件地址（占位）。
    * 替换方式：部署静态 JSON 文件后，把该字符串改为真实 HTTPS 地址，
    * 并将 USE_MOCK 置为 false；地址需在微信公众平台 request 合法域名中配置。
    */
-  REMOTE_PRICES_URL: 'https://example.com/quiet-scale/prices.json',
+  REMOTE_PRICES_URL: 'https://zoxyu.github.io/QuietScale/dist/prices.json',
 
   /** 远程数据拉取超时（毫秒） */
   FETCH_TIMEOUT_MS: 8000,
