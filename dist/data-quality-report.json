@@ -1,16 +1,28 @@
 {
-  "generatedAt": "2026-08-22T06:29:51+08:00",
-  "durationMs": 26,
-  "totalSamplesRaw": 1308,
+  "generatedAt": "2026-08-23T01:31:17+08:00",
+  "durationMs": 3220,
+  "totalSamplesRaw": 1355,
   "totalSamplesClean": 1308,
+  "singleAverageSampleCount": 47,
   "samplesPerSource": {
-    "人工维护季节基准（Mock）": 1308
+    "人工维护季节基准（Mock）": 1308,
+    "福州市发改委主副食品集超均价": 47
   },
   "removedInvalid": 0,
   "removedOutliers": 0,
   "removedOutliersByCategory": {},
   "failedAdapters": [],
-  "recordCount": 45,
+  "recordCount": 92,
   "estimatedRecordCount": 0,
-  "missingCategories": []
+  "singleAverageRecordCount": 47,
+  "missingCategories": [
+    "福州/叶菜",
+    "福州/根茎",
+    "福州/茄果",
+    "福州/豆类",
+    "福州/猪肉",
+    "福州/鸡蛋",
+    "福州/大米",
+    "福州/食用油"
+  ]
 }
