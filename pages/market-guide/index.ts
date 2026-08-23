@@ -15,7 +15,7 @@
  * 4. 「我看到的价格」经 200ms 防抖调用 judgeObservedPrice，结果按五档映射视觉。
  */
 
-import { getPriceDataset } from '../../services/price-data-service';
+import { getPriceDataset, clearPriceCache } from '../../services/price-data-service';
 import { judgeObservedPrice } from '../../services/judge';
 import { splitSeasonalList, getSeasonalTip } from '../../services/seasonal';
 import { SEASONAL_BASELINES } from '../../mock/seasonal-baselines';
@@ -353,6 +353,8 @@ Page({
     userSelected: false,
     /** 定位中（按钮状态用） */
     locating: false,
+    /** 手动刷新中（按钮状态用，防重复点击） */
+    refreshing: false,
     /** 定位结果提示（成功命中 / 未接入 / 失败） */
     locationHint: '',
     channelOptions: CHANNEL_OPTIONS,
@@ -422,8 +424,11 @@ Page({
     });
   },
 
-  /** 拉取参考价数据集（门面服务统一收口；沿用分支附 carryNote） */
-  loadPrices(this: any): void {
+  /**
+   * 拉取参考价数据集（门面服务统一收口；沿用分支附 carryNote）。
+   * @param refreshMode 手动刷新模式：完成后按结果给用户 toast 反馈并复位按钮态
+   */
+  loadPrices(this: any, refreshMode?: boolean): void {
     this.setData({ loading: true });
     getPriceDataset()
       .then((res: { file: PricesFile; grade: DataGrade; carryNote?: string }) => {
@@ -434,9 +439,23 @@ Page({
           carryNote: res.carryNote || ''
         });
         this.applyFilter();
+        if (refreshMode) {
+          this.setData({ refreshing: false });
+          if (res.grade === 'remote') {
+            wx.showToast({ title: '参考价已更新', icon: 'success' });
+          } else if (res.grade === 'remote_stale') {
+            wx.showToast({ title: '已沿用最近一期数据', icon: 'none' });
+          } else {
+            wx.showToast({ title: '拉取失败，展示本地数据', icon: 'none' });
+          }
+        }
       })
       .catch(() => {
         this.setData({ loading: false });
+        if (refreshMode) {
+          this.setData({ refreshing: false });
+          wx.showToast({ title: '拉取失败，请稍后重试', icon: 'none' });
+        }
       });
   },
 
@@ -494,11 +513,30 @@ Page({
     this.applyFilter();
   },
 
-  /** 重新定位：用户主动点击表示再次跟随定位，清除手动选择标记 */
+  /**
+   * 手动刷新：清掉全部拉取状态（内存缓存/拉取标记/断更沿用缓存）后强制从远端重新拉取，
+   * 完成后按结果 toast 反馈（成功 / 沿用 / 失败降级）。
+   */
+  onRefreshTap(this: any): void {
+    if (this.data.refreshing) {
+      return;
+    }
+    this.setData({ refreshing: true });
+    clearPriceCache();
+    this.loadPrices(true);
+  },
+
+  /**
+   * 重新定位：用户主动点击 = 再次跟随定位 + 重置数据拉取状态。
+   * 同步清理内存缓存 / 拉取标记 / 断更沿用缓存，并立即重新拉取远端数据，
+   * 避免「当日已尝试拉取」或失败节流标记阻塞刷新（用户无需删小程序清缓存）。
+   */
   onRelocate(this: any): void {
     if (this.data.locating) {
       return;
     }
+    clearPriceCache();
+    this.loadPrices();
     this.locate(false);
   },
 

@@ -66,6 +66,40 @@
   color: var(--color-text-secondary);
 }
 
+/* 顶部右侧操作区：徽标 + 刷新按钮 */
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+/* 刷新数据按钮：墨绿描边胶囊，明显可点击 */
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56rpx;
+  padding: 0 22rpx;
+  margin-top: 12rpx;
+  border-radius: var(--radius-pill);
+  border: 2rpx solid var(--color-ink);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 22rpx;
+  letter-spacing: 1rpx;
+  transition: all 180ms ease;
+}
+
+/* 刷新中：降低透明度，暗示不可重复点击 */
+.refresh-btn-busy {
+  opacity: 0.6;
+}
+
+.refresh-hover {
+  background-color: var(--color-win-bg);
+}
+
 /* 断更沿用说明行：弱化字色，仅在沿用最近一期数据时出现 */
 .carry-note {
   margin-top: 14rpx;
