@@ -26,6 +26,14 @@ export const APP_CONFIG = {
   /** 远程数据拉取超时（毫秒） */
   FETCH_TIMEOUT_MS: 8000,
 
+  /**
+   * 远程拉取失败后的重试节流间隔（毫秒）。
+   * 失败/超时/数据过期后写入带 failedAt 的短时效标记，
+   * 距 failedAt 不足该间隔不再重试；超过则自动放行再次拉取。
+   * 成功拉取不受此限制，仍保持「成功时每天最多拉一次」。
+   */
+  FAIL_RETRY_INTERVAL_MS: 60 * 60 * 1000,
+
   /** 结果卡片入场动画时长（毫秒） */
   RESULT_ANIMATION_MS: 220,
 
