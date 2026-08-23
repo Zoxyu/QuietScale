@@ -15,6 +15,9 @@
     <view wx:if="{{gradeLabel}}" class="grade-badge">{{gradeLabel}}</view>
   </view>
 
+  <!-- 断更沿用说明：仅在数据服务透出 carryNote 时展示（弱化字色） -->
+  <view wx:if="{{carryNote}}" class="carry-note">{{carryNote}}</view>
+
   <!-- A. 城市（省市两级 + 定位）与渠道 -->
   <view class="card selector-card fade-in-up">
     <view class="selector-block">

@@ -78,9 +78,10 @@ const CONFIDENCE_NAME: Record<Confidence, string> = {
   low: '低置信度'
 };
 
-/** 数据等级 grade → 顶部徽标文案 */
+/** 数据等级 grade → 顶部徽标文案（remote_stale 为断更沿用，复用现有徽标弱化样式） */
 const GRADE_NAME: Record<DataGrade, string> = {
   remote: '远程参考数据',
+  remote_stale: '远程参考数据 · 沿用最近一期',
   local_baseline: '本地参考数据'
 };
 
@@ -360,6 +361,8 @@ Page({
     /* B. 今日参考价 */
     loading: true,
     gradeLabel: '',
+    /** 断更沿用说明（数据服务透出，优先于徽标展示在顶部数据说明行，弱化字色） */
+    carryNote: '',
     filterNote: '',
     groups: [] as CategoryGroupView[],
 
@@ -419,13 +422,17 @@ Page({
     });
   },
 
-  /** 拉取参考价数据集（门面服务统一收口） */
+  /** 拉取参考价数据集（门面服务统一收口；沿用分支附 carryNote） */
   loadPrices(this: any): void {
     this.setData({ loading: true });
     getPriceDataset()
-      .then((res: { file: PricesFile; grade: DataGrade }) => {
+      .then((res: { file: PricesFile; grade: DataGrade; carryNote?: string }) => {
         this._allRecords = (res.file && res.file.records) || [];
-        this.setData({ loading: false, gradeLabel: GRADE_NAME[res.grade] || '' });
+        this.setData({
+          loading: false,
+          gradeLabel: GRADE_NAME[res.grade] || '',
+          carryNote: res.carryNote || ''
+        });
         this.applyFilter();
       })
       .catch(() => {

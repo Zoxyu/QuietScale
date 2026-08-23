@@ -196,6 +196,11 @@ export interface PricesFile {
   records: PriceRecord[];
   /** 数据是否已过期 */
   stale?: boolean;
+  /**
+   * 周末/断更沿用说明（可选）：本期官方源数据日期早于生成当日时由管线写入，
+   * 如「周末/断更参考：沿用 2026-08-21 官方均价数据」；工作日正常更新时不存在该字段。
+   */
+  carryNote?: string;
 }
 
 /** 价格判断等级：低价 / 公道 / 略贵 / 明显贵 / 数据不足 */
@@ -266,7 +271,7 @@ export interface MarkupTable {
   };
 }
 
-/** 数据等级：远端兜底 / 本地基线 */
-export type DataGrade = 'remote' | 'local_baseline';
+/** 数据等级：远端当日数据 / 远端沿用最近一期（断更沿用） / 本地基线 */
+export type DataGrade = 'remote' | 'remote_stale' | 'local_baseline';
 
 /** 城市配置（省市两级 + 定位坐标）已迁移至 config/regions.ts */

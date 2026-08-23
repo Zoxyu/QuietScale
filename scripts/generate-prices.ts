@@ -381,6 +381,24 @@ async function main(): Promise<void> {
   }
   log(`异常清理完成：保留 ${cleaned.length} 条，剔除异常 ${removedOutliers} 条（负值或超出 Q1-1.5×IQR / Q3+1.5×IQR）`);
 
+  /* ---- 3b. 官方源最新一期数据日期（carryNote 检测用，必须在清洗之后统计） ----
+   * 官方源 = 优先级 ≤ 2（发改委/商务局零售参考与商务部市场监测）。
+   * 统计范围为清洗后存活的常规归一样本与单均价样本：若官方样本全部被剔除
+   *（如全 0 元缺报占位被非法校验/ IQR 清除），则本期无存活的官方数据，
+   * 不得写入误导性沿用说明。周末/节假日官方不发布时，Adapter 会自动沿用最近一期，
+   * 其 dataDate 早于生成当日，据此在文件顶层写入 carryNote；工作日正常更新时不写。 */
+  const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
+  let latestOfficialDate = '';
+  for (const item of cleaned.concat(singleAvgNormalized)) {
+    const d = item.sample.dataDate;
+    if (item.priority <= 2 && typeof d === 'string' && DATE_KEY_RE.test(d) && d > latestOfficialDate) {
+      latestOfficialDate = d;
+    }
+  }
+  if (latestOfficialDate) {
+    log(`官方源最新一期数据日期：${latestOfficialDate}${latestOfficialDate < dateKey ? '（早于生成当日，将写入 carryNote 沿用说明）' : ''}`);
+  }
+
   /* ---- 4. 按 城市+渠道+品类 聚合 ---- */
   const groupMap = new Map<string, AggGroup>();
   for (const item of cleaned) {
@@ -593,6 +611,12 @@ async function main(): Promise<void> {
     expiresAt,
     records
   };
+  // carryNote：本期官方源数据日期早于生成当日（周末/断更沿用最近一期）时写入说明；
+  // 工作日正常更新（日期等于当日）或无官方源样本时不写该字段。
+  if (latestOfficialDate && latestOfficialDate < dateKey) {
+    pricesFile.carryNote = `周末/断更参考：沿用 ${latestOfficialDate} 官方均价数据`;
+    log(`已写入 carryNote：${pricesFile.carryNote}`);
+  }
 
   /* ---- 7. 输出 dist/ 三个文件 ---- */
   writeFileAtomic(pricesPath, JSON.stringify(pricesFile, null, 2));

@@ -66,6 +66,15 @@
   color: var(--color-text-secondary);
 }
 
+/* 断更沿用说明行：弱化字色，仅在沿用最近一期数据时出现 */
+.carry-note {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  letter-spacing: 1rpx;
+  color: var(--color-text-secondary);
+}
+
 /* ---------- A. 城市与渠道 ---------- */
 .selector-card {
   margin-top: var(--space-lg);
