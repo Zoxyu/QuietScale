@@ -45,7 +45,7 @@
         </view>
         <view class="price-cell price-cell-mid">
           <view class="price-num price-mid-num">{{rec.median}}</view>
-          <view class="price-cap">中位数</view>
+          <view class="price-cap">参考价</view>
         </view>
         <view class="price-cell">
           <view class="price-num price-high-num">{{rec.high}}</view>

@@ -12,15 +12,7 @@
         </view>
       </view>
     </view>
-    <view class="header-actions">
-      <view wx:if="{{gradeLabel}}" class="grade-badge">{{gradeLabel}}</view>
-      <view
-        class="refresh-btn {{refreshing ? 'refresh-btn-busy' : ''}}"
-        hover-class="refresh-hover"
-        hover-stay-time="80"
-        bindtap="onRefreshTap"
-      >{{refreshing ? '刷新中…' : '刷新数据'}}</view>
-    </view>
+    <view wx:if="{{gradeLabel}}" class="grade-badge">{{gradeLabel}}</view>
   </view>
 
   <!-- 断更沿用说明：仅在数据服务透出 carryNote 时展示（弱化字色） -->
@@ -78,6 +70,12 @@
     <view class="section-head">
       <text class="section-title">今日参考价</text>
       <text class="section-sub">单位以条目为准</text>
+      <view
+        class="refresh-btn {{refreshing ? 'refresh-btn-busy' : ''}}"
+        hover-class="refresh-hover"
+        hover-stay-time="80"
+        bindtap="onRefreshTap"
+      >{{refreshing ? '刷新中…' : '刷新数据'}}</view>
     </view>
 
     <view wx:if="{{filterNote}}" class="filter-note">{{filterNote}}</view>

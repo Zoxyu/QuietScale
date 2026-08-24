@@ -26,7 +26,7 @@
     <view class="price-range">{{item.low}}–{{item.high}}</view>
     <view class="price-unit">{{item.unit}}</view>
     <view class="price-median">
-      中位 <text class="median-num">{{item.median}}</text>
+      参考价 <text class="median-num">{{item.median}}</text>
     </view>
   </view>
 </view>
