@@ -412,6 +412,21 @@ Page({
     clearTimeout(this._judgeTimer);
   },
 
+  /** 发送给朋友：分享菜场指南首页 */
+  onShareAppMessage(): Record<string, string> {
+    return {
+      title: '一秤清欢·菜场指南｜近期菜价参考',
+      path: '/pages/market-guide/index'
+    };
+  },
+
+  /** 分享到朋友圈：分享菜场指南首页 */
+  onShareTimeline(): Record<string, string> {
+    return {
+      title: '一秤清欢·菜场指南｜近期菜价参考'
+    };
+  },
+
   /** 装载季节基线数据（纯本地 JSON + 纯函数，不请求定位） */
   loadSeasonal(this: any): void {
     const items = (SEASONAL_FILE && SEASONAL_FILE.items) || [];

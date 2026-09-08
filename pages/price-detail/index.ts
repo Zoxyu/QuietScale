@@ -106,13 +106,35 @@ Page({
     rec: null as DetailView | null
   },
 
+  /** 当前记录 id（分享 path / query 用） */
+  _shareId: '' as string,
+
   onLoad(this: any, options: Record<string, string>): void {
     const id = (options && options.id ? decodeURIComponent(options.id) : '').trim();
     if (!id) {
       this.setData({ loading: false, notFound: true });
       return;
     }
+    this._shareId = id;
     this.loadRecord(id);
+  },
+
+  /** 发送给朋友：分享当前价格详情（携带记录 id） */
+  onShareAppMessage(this: any): Record<string, string> {
+    const rec = this.data.rec as DetailView | null;
+    return {
+      title: rec ? `「${rec.productName}」近期参考价｜一秤清欢` : '一秤清欢·价格详情',
+      path: `/pages/price-detail/index?id=${encodeURIComponent(this._shareId as string)}`
+    };
+  },
+
+  /** 分享到朋友圈：单页模式，记录 id 经 query 传递 */
+  onShareTimeline(this: any): Record<string, string> {
+    const rec = this.data.rec as DetailView | null;
+    return {
+      title: rec ? `「${rec.productName}」近期参考价｜一秤清欢` : '一秤清欢·价格详情',
+      query: `id=${encodeURIComponent(this._shareId as string)}`
+    };
   },
 
   /** 拉取数据集并定位记录 */

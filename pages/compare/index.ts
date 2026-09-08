@@ -252,6 +252,21 @@ Page({
     clearTimeout(this._noTransTimer);
   },
 
+  /** 发送给朋友：分享比一比首页 */
+  onShareAppMessage(): Record<string, string> {
+    return {
+      title: '一秤清欢·比一比｜买菜之前，先算清楚',
+      path: '/pages/compare/index'
+    };
+  },
+
+  /** 分享到朋友圈：分享比一比首页 */
+  onShareTimeline(): Record<string, string> {
+    return {
+      title: '一秤清欢·比一比｜买菜之前，先算清楚'
+    };
+  },
+
   /** 打开/关闭「计算说明」Bottom Sheet */
   onSheet(this: any, e: any): void {
     this.setData({ sheetOpen: e.currentTarget.dataset.open === '1' });

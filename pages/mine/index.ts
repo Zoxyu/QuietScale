@@ -52,5 +52,20 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 2 });
     }
+  },
+
+  /** 发送给朋友：分享产品介绍页 */
+  onShareAppMessage(): Record<string, string> {
+    return {
+      title: '一秤清欢｜买菜之前，先算清楚',
+      path: '/pages/mine/index'
+    };
+  },
+
+  /** 分享到朋友圈：分享产品介绍页 */
+  onShareTimeline(): Record<string, string> {
+    return {
+      title: '一秤清欢｜买菜之前，先算清楚'
+    };
   }
 });
